@@ -29,6 +29,7 @@
     "@angular/compiler-cli": "^21.2.0",
     "@cucumber/cucumber": "^12.7.0",
     "@types/jest": "^30.0.0",
+    "@types/node": "^25.4.0",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "jest-preset-angular": "^16.1.1",

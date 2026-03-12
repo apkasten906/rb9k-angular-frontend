@@ -1,5 +1,5 @@
 import { Given, Then } from '@cucumber/cucumber';
-import assert from 'assert';
+import assert from 'node:assert/strict';
 
 let appTitle: string;
 

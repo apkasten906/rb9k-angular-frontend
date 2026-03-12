@@ -68,6 +68,18 @@ To execute the BDD scenarios, run:
 npm run cucumber
 ```
 
+## Continuous Integration
+
+GitHub Actions CI is defined in `.github/workflows/ci.yml`.
+
+The workflow runs on pushes to `main` and on all pull requests, and it validates:
+
+- `npm run build`
+- `npm run test:coverage -- --runInBand`
+- `npm run cucumber`
+
+Coverage and Cucumber JSON reports are uploaded as workflow artifacts.
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

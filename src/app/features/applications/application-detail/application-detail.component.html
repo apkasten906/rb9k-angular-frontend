@@ -1,0 +1,214 @@
+@if (notFound) {
+  <div class="not-found">
+    <mat-icon>search_off</mat-icon>
+    <p>Application not found.</p>
+    <button mat-stroked-button (click)="goBack()">Back to list</button>
+  </div>
+}
+
+@if (application && !notFound) {
+  <div class="detail-container">
+
+    <!-- Header -->
+    <mat-card class="header-card">
+      <mat-card-content>
+        <div class="header-row">
+          <button mat-icon-button (click)="goBack()" matTooltip="Back to applications" aria-label="Back to applications">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <div class="header-info">
+            <h1 class="job-title">{{ posting?.jobTitle ?? 'Unposted Role' }}</h1>
+            <div class="header-meta">
+              <span class="company-name">{{ company?.companyName }}</span>
+              <span class="sep">·</span>
+              @if (!editingAppliedDate) {
+                <span class="applied-date">
+                  Applied {{ application.appliedDate | date:'mediumDate':'UTC' }}
+                  <button mat-icon-button class="edit-date-btn"
+                    matTooltip="Edit applied date" aria-label="Edit applied date" (click)="startEditAppliedDate()">
+                    <mat-icon>edit_calendar</mat-icon>
+                  </button>
+                </span>
+              } @else {
+                <span class="applied-date-edit">
+                  <mat-form-field appearance="outline" class="date-edit-field">
+                    <mat-label>Applied Date</mat-label>
+                    <input matInput [matDatepicker]="headerPicker"
+                      [(ngModel)]="appliedDateEdit" />
+                    <mat-datepicker-toggle matSuffix [for]="headerPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #headerPicker></mat-datepicker>
+                  </mat-form-field>
+                  <button mat-icon-button color="primary" matTooltip="Save date" aria-label="Save date"
+                    (click)="saveAppliedDate()">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Cancel" aria-label="Cancel date edit" (click)="cancelEditAppliedDate()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </span>
+              }
+              <span class="sep">·</span>
+              @if (!editingPostingUrl) {
+                <span class="posting-url-display">
+                  @if (application.postingUrl) {
+                    <a [href]="application.postingUrl" target="_blank" rel="noopener" mat-button color="primary">
+                      <mat-icon>open_in_new</mat-icon> View Posting
+                    </a>
+                  } @else {
+                    <span class="no-url">No posting URL</span>
+                  }
+                  <button mat-icon-button class="edit-date-btn"
+                    matTooltip="Edit posting URL" aria-label="Edit posting URL" (click)="startEditPostingUrl()">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </span>
+              } @else {
+                <span class="posting-url-edit">
+                  <mat-form-field appearance="outline" class="url-edit-field">
+                    <mat-label>Posting URL</mat-label>
+                    <input matInput type="url" [(ngModel)]="postingUrlEdit"
+                      placeholder="https://..." />
+                    <mat-icon matSuffix>link</mat-icon>
+                  </mat-form-field>
+                  <button mat-icon-button color="primary" matTooltip="Save URL" aria-label="Save URL"
+                    (click)="savePostingUrl()">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Cancel" aria-label="Cancel URL edit" (click)="cancelEditPostingUrl()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </span>
+              }
+            </div>
+          </div>
+          <app-status-badge [status]="application.status" class="header-status" />
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="detail-columns">
+
+      <!-- LEFT COLUMN -->
+      <div class="left-column">
+
+        <!-- Status Transition -->
+        @if (availableTransitions.length > 0) {
+          <mat-card class="section-card">
+            <mat-card-header>
+              <mat-card-title>Update Status</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>New Status</mat-label>
+                <mat-select [(ngModel)]="selectedTransition">
+                  @for (t of availableTransitions; track t) {
+                    <mat-option [value]="t">{{ t }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button
+                mat-raised-button
+                color="primary"
+                [disabled]="!selectedTransition"
+                (click)="applyTransition()"
+              >
+                Apply
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+
+        <!-- Salary -->
+        <app-salary-form [salary]="salary" (saved)="onSalarySaved($event)" />
+
+        <!-- Notes -->
+        <mat-card class="section-card">
+          <mat-card-header>
+            <mat-card-title>Notes</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            @if (notes.length === 0) {
+              <p class="empty-hint">No notes yet.</p>
+            }
+            @for (note of notes; track note.noteId) {
+              <div class="note-item">
+                <div class="note-meta">{{ note.author }} · {{ note.createdAt | date:'short':'UTC' }}</div>
+                <div class="note-content">{{ note.content }}</div>
+              </div>
+              <mat-divider />
+            }
+            <form [formGroup]="noteForm" (ngSubmit)="addNote()" class="note-form">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Add a note</mat-label>
+                <textarea matInput formControlName="content" rows="3"></textarea>
+              </mat-form-field>
+              <div class="note-actions">
+                <button mat-raised-button color="accent" type="submit" [disabled]="noteForm.invalid">
+                  Save Note
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+      </div><!-- /left-column -->
+
+      <!-- RIGHT COLUMN -->
+      <div class="right-column">
+
+        <!-- Document Linking -->
+        <mat-card class="section-card">
+          <mat-card-header>
+            <mat-card-title>Documents</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon>description</mat-icon>
+                <span matListItemTitle>Resume</span>
+                <span matListItemLine>
+                  @if (application.resumeId) {
+                    Resume #{{ application.resumeId }}
+                  } @else {
+                    <em>None linked</em>
+                  }
+                </span>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-icon matListItemIcon>mail_outline</mat-icon>
+                <span matListItemTitle>Cover Letter</span>
+                <span matListItemLine>
+                  @if (application.coverLetterId) {
+                    Cover Letter #{{ application.coverLetterId }}
+                  } @else {
+                    <em>None linked</em>
+                  }
+                </span>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-stroked-button (click)="openDocumentLinker()">
+              <mat-icon>link</mat-icon> Link Documents
+            </button>
+          </mat-card-actions>
+        </mat-card>
+
+        <!-- Timeline -->
+        <mat-card class="section-card">
+          <mat-card-header>
+            <mat-card-title>Activity Timeline</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-timeline [events]="timeline" />
+          </mat-card-content>
+        </mat-card>
+
+      </div><!-- /right-column -->
+
+    </div><!-- /detail-columns -->
+
+  </div><!-- /detail-container -->
+}

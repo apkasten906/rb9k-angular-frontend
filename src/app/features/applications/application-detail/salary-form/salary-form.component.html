@@ -1,0 +1,52 @@
+<mat-card class="salary-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>attach_money</mat-icon> Salary Information
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="form" class="salary-form">
+
+      <div class="salary-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Expected Salary</mat-label>
+          <input matInput type="number" formControlName="userExpectedSalary" placeholder="0" min="0" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Company Offer</mat-label>
+          <input matInput type="number" formControlName="companyOfferedSalary" placeholder="0" min="0" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Industry Average</mat-label>
+          <input matInput type="number" formControlName="industryAverageSalary" placeholder="0" min="0" />
+        </mat-form-field>
+      </div>
+
+      <div class="salary-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Currency</mat-label>
+          <mat-select formControlName="currency">
+            @for (c of currencies; track c) {
+              <mat-option [value]="c">{{ c }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Region</mat-label>
+          <input matInput formControlName="region" placeholder="e.g. NY" />
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="accent" type="button" (click)="onSave()">
+      Save Salary Info
+    </button>
+  </mat-card-actions>
+</mat-card>

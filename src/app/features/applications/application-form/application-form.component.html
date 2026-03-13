@@ -1,0 +1,100 @@
+<mat-card class="form-card">
+  <mat-card-header>
+    <mat-card-title>New Job Application</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" id="application-form" class="application-form">
+
+      <!-- Company selector + inline add -->
+      <div class="company-row">
+        <mat-form-field appearance="outline" class="company-field">
+          <mat-label>Company *</mat-label>
+          <mat-select formControlName="companyId">
+            @for (company of companies; track company.companyId) {
+              <mat-option [value]="company.companyId">{{ company.companyName }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>Company is required</mat-error>
+        </mat-form-field>
+        <button mat-icon-button type="button" matTooltip="Add new company"
+          (click)="showAddCompany = !showAddCompany">
+          <mat-icon>add_business</mat-icon>
+        </button>
+      </div>
+
+      @if (showAddCompany) {
+        <div class="add-company-row">
+          <mat-form-field appearance="outline" class="company-field">
+            <mat-label>New company name</mat-label>
+            <input matInput [(ngModel)]="newCompanyName" [ngModelOptions]="{standalone: true}"
+              placeholder="e.g. Acme Corp" />
+          </mat-form-field>
+          <button mat-stroked-button type="button" color="primary"
+            [disabled]="!newCompanyName.trim()" (click)="addCompany()">
+            Add
+          </button>
+        </div>
+      }
+
+      <!-- Job Posting selector + inline add -->
+      <div class="company-row">
+        <mat-form-field appearance="outline" class="company-field">
+          <mat-label>Job Posting</mat-label>
+          <mat-select formControlName="jobId">
+            <mat-option [value]="null">— None available —</mat-option>
+            @for (posting of availablePostings; track posting.jobId) {
+              <mat-option [value]="posting.jobId">{{ posting.jobTitle }}</mat-option>
+            }
+          </mat-select>
+          <mat-hint>Select a posting or leave blank</mat-hint>
+        </mat-form-field>
+        <button mat-icon-button type="button" matTooltip="Add new job posting"
+          [disabled]="!form.get('companyId')?.value"
+          (click)="showAddPosting = !showAddPosting">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      @if (showAddPosting) {
+        <div class="add-posting-row">
+          <mat-form-field appearance="outline" class="posting-title-field">
+            <mat-label>Job title *</mat-label>
+            <input matInput [(ngModel)]="newPostingTitle" [ngModelOptions]="{standalone: true}"
+              placeholder="e.g. Software Engineer" />
+          </mat-form-field>
+          <button mat-stroked-button type="button" color="primary"
+            [disabled]="!newPostingTitle.trim()" (click)="addPosting()">
+            Add
+          </button>
+        </div>
+        <mat-hint class="posting-hint">The posting URL below will also be saved on the new posting.</mat-hint>
+      }
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Posting URL (optional)</mat-label>
+        <input matInput formControlName="postingUrl" type="url" placeholder="https://..." />
+        <mat-icon matSuffix>link</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Applied Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="appliedDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint>Defaults to today</mat-hint>
+      </mat-form-field>
+
+      <p class="status-note">Status will be set to <strong>Applied</strong> automatically.</p>
+
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" form="application-form"
+      [disabled]="form.invalid">
+      Create Application
+    </button>
+  </mat-card-actions>
+</mat-card>

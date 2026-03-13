@@ -188,14 +188,16 @@ export class ApplicationService {
     if (resumeId != null) parts.push(`Resume #${resumeId}`);
     if (coverLetterId != null) parts.push(`Cover Letter #${coverLetterId}`);
 
-    const event: TimelineEvent = {
-      eventType: 'document_link',
-      applicationId,
-      details: `Documents linked: ${parts.join(', ')}`,
-      author,
-      timestamp: new Date().toISOString(),
-    };
-    this.mock.timelineEvents.push(event);
+    if (parts.length > 0) {
+      const event: TimelineEvent = {
+        eventType: 'document_link',
+        applicationId,
+        details: `Documents linked: ${parts.join(', ')}`,
+        author,
+        timestamp: new Date().toISOString(),
+      };
+      this.mock.timelineEvents.push(event);
+    }
 
     return app;
   }

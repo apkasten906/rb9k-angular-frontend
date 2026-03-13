@@ -195,8 +195,8 @@ Then<AppWorld>('the history captures the long gap between updates', function () 
     const gapDays = gapMs / (1000 * 60 * 60 * 24);
     // The seed data ensures there is a 90-day gap
     assert.ok(
-      gapDays >= 1,
-      `Expected a significant gap in history, but gap was only ${gapDays.toFixed(1)} days`,
+      gapDays >= 30,
+      `Expected a significant gap of at least 30 days in history, but gap was only ${gapDays.toFixed(1)} days`,
     );
   }
 });

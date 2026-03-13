@@ -175,7 +175,8 @@ export class ApplicationDetailComponent implements OnInit {
 
   startEditAppliedDate(): void {
     if (!this.application) return;
-    this.appliedDateEdit = new Date(this.application.appliedDate);
+    const [year, month, day] = this.application.appliedDate.split('-').map(Number);
+    this.appliedDateEdit = new Date(year, month - 1, day);
     this.editingAppliedDate = true;
   }
 

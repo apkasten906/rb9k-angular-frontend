@@ -3,7 +3,7 @@
     @if (row.type === 'gap') {
       <div class="gap-divider">
         <mat-divider></mat-divider>
-        <span class="gap-label">{{ row.gapDays }} day gap</span>
+        <span class="gap-label">{{ row.gapDays }} {{ row.gapDays === 1 ? 'day' : 'days' }} gap</span>
         <mat-divider></mat-divider>
       </div>
     } @else if (row.event) {

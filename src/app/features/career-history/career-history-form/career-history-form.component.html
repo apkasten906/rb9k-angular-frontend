@@ -1,0 +1,68 @@
+<mat-card class="form-card">
+  <mat-card-header>
+    <mat-card-title>{{ isEdit ? 'Edit Role' : 'Add New Role' }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Employer</mat-label>
+        <input matInput formControlName="employer" placeholder="e.g. Acme Corp" />
+        @if (form.get('employer')?.hasError('required')) {
+          <mat-error>Employer is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Job Title</mat-label>
+        <input matInput formControlName="jobTitle" placeholder="e.g. Data Analyst" />
+        @if (form.get('jobTitle')?.hasError('required')) {
+          <mat-error>Job title is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="date-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+          <mat-datepicker-toggle matSuffix [for]="startPicker" />
+          <mat-datepicker #startPicker />
+          @if (form.get('startDate')?.hasError('required')) {
+            <mat-error>Start date is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>End Date (leave blank if current)</mat-label>
+          <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
+          <mat-datepicker-toggle matSuffix [for]="endPicker" />
+          <mat-datepicker #endPicker />
+        </mat-form-field>
+      </div>
+
+      @if (endBeforeStartError) {
+        <mat-error class="cross-field-error">
+          End date must be after start date.
+        </mat-error>
+      }
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" placeholder="e.g. New York, USA" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="4" placeholder="Brief summary of the role"></textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-button type="button" (click)="cancel()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          {{ isEdit ? 'Save Changes' : 'Add Role' }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

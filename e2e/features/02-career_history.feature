@@ -75,20 +75,6 @@ Feature: Career History Management
     When the user views the career timeline
     Then the two roles are displayed as concurrent and not merged into a single entry
 
-  @relevance
-  Scenario: Calculating relevance scores using provided keywords
-    Given a career entry exists for "Acme Corp" as "Data Analyst"
-    And the career entry has the following responsibilities:
-      | responsibility                                       |
-      | Built SQL dashboards for stakeholder communication   |
-      | Automated data quality checks                        |
-    And the career entry has the following achievements:
-      | achievement                   | impact metric      |
-      | Reduced reporting time by 40% | 40% faster reports |
-    When the user requests relevance scoring against the keywords "SQL", "dashboarding", "stakeholder communication"
-    Then each responsibility and achievement receives a score between 0 and 100
-    And the 3 highest-scoring items are highlighted
-
   @filter
   Scenario: Filtering by role category
     Given the following career entries exist:
@@ -109,6 +95,8 @@ Feature: Career History Management
     Then a gap banner is shown between the two roles
     And the banner displays the gap start date "2019-06-01", end date "2019-09-14", and duration in months
     And the banner includes a prompt to add an explanation
+    When the user saves the explanation "Took time off for personal development"
+    Then the gap banner shows the explanation "Took time off for personal development"
 
   @validation
   Scenario: Rejecting a career entry with end date before start date

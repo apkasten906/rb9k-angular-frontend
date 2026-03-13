@@ -1,0 +1,124 @@
+@if (entry) {
+<div class="detail-container">
+
+  <!-- Header -->
+  <div class="detail-header">
+    <button mat-icon-button (click)="back()" aria-label="Back to career history">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-titles">
+      <h1>{{ entry.jobTitle }}</h1>
+      <h2>{{ entry.employer }}</h2>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="edit()">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+      <button mat-stroked-button color="warn" (click)="delete()">
+        <mat-icon>delete</mat-icon> Delete
+      </button>
+    </div>
+  </div>
+
+  <!-- Details -->
+  <mat-card class="info-card">
+    <mat-card-content>
+      <p class="dates">
+        <mat-icon inline>date_range</mat-icon>
+        {{ entry.startDate }} &ndash; {{ entry.endDate ?? 'Present' }}
+      </p>
+      @if (entry.location) {
+        <p class="location">
+          <mat-icon inline>place</mat-icon> {{ entry.location }}
+        </p>
+      }
+      @if (entry.description) {
+        <p class="description">{{ entry.description }}</p>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-divider />
+
+  <!-- Responsibilities -->
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>Responsibilities</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (responsibilities.length > 0) {
+        <mat-list>
+          @for (r of responsibilities; track r.responsibilityId) {
+            <mat-list-item>
+              <span matListItemTitle>{{ r.text }}</span>
+              <span matListItemMeta>
+                <button mat-icon-button aria-label="Remove" (click)="removeResponsibility(r.responsibilityId)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </span>
+            </mat-list-item>
+          }
+        </mat-list>
+      } @else {
+        <p class="empty-hint">No responsibilities yet.</p>
+      }
+
+      <!-- Add responsibility -->
+      <div class="add-row">
+        <mat-form-field appearance="outline" class="add-field">
+          <mat-label>New responsibility</mat-label>
+          <input matInput [(ngModel)]="newResponsibility" (keyup.enter)="addResponsibility()" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addResponsibility()">Add</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Achievements -->
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>Achievements</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (achievements.length > 0) {
+        <mat-list>
+          @for (a of achievements; track a.achievementId) {
+            <mat-list-item>
+              <span matListItemTitle>{{ a.text }}</span>
+              @if (a.impactMetric) {
+                <span matListItemLine>{{ a.impactMetric }}</span>
+              }
+              <span matListItemMeta>
+                <button mat-icon-button aria-label="Remove" (click)="removeAchievement(a.achievementId)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </span>
+            </mat-list-item>
+          }
+        </mat-list>
+      } @else {
+        <p class="empty-hint">No achievements yet.</p>
+      }
+
+      <!-- Add achievement -->
+      <div class="add-row">
+        <mat-form-field appearance="outline" class="add-field">
+          <mat-label>Achievement</mat-label>
+          <input matInput [(ngModel)]="newAchievementText" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="add-field-sm">
+          <mat-label>Impact metric</mat-label>
+          <input matInput [(ngModel)]="newAchievementImpact" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addAchievement()">Add</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+} @else {
+  <div class="not-found">
+    <p>Career entry not found.</p>
+    <button mat-button (click)="back()">Back to Career History</button>
+  </div>
+}

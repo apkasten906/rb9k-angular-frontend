@@ -10,6 +10,9 @@ import { SalaryInfo } from '../models/salary-info.model';
 import { Resume } from '../models/resume.model';
 import { CoverLetter } from '../models/cover-letter.model';
 import { TimelineEvent } from '../models/timeline-event.model';
+import { CareerEntry } from '../models/career-entry.model';
+import { CareerResponsibility } from '../models/career-responsibility.model';
+import { CareerAchievement } from '../models/career-achievement.model';
 
 const NOW = '2026-03-12T10:26:06.997Z';
 const NINETY_DAYS_AGO = '2025-12-11T10:26:06.997Z';
@@ -209,5 +212,55 @@ export class MockDataService {
     resume: 3,
     coverLetter: 2,
     statusHistory: 7,
+    careerEntry: 4,
+    responsibility: 3,
+    achievement: 2,
   };
+
+  careerEntries: CareerEntry[] = [
+    {
+      careerEntryId: 1,
+      userId: 1,
+      employer: 'Beta Systems',
+      jobTitle: 'Junior Analyst',
+      startDate: '2017-01-01',
+      endDate: '2019-05-31',
+      location: 'Chicago, USA',
+      description: 'Entry-level analytics role.',
+      category: 'Junior Analyst',
+    },
+    {
+      careerEntryId: 2,
+      userId: 1,
+      employer: 'DataVision Inc',
+      jobTitle: 'Data Analyst',
+      startDate: '2019-03-01',
+      endDate: '2019-05-31',
+      location: 'Remote',
+      description: 'Part-time contract overlap.',
+      category: 'Data Analyst',
+    },
+    {
+      careerEntryId: 3,
+      userId: 1,
+      employer: 'CloudWorks',
+      jobTitle: 'Senior Analyst',
+      startDate: '2021-01-01',
+      endDate: '2023-06-30',
+      location: 'Seattle, USA',
+      description: 'Led data platform migrations.',
+      category: 'Senior Analyst',
+    },
+  ];
+
+  careerResponsibilities: CareerResponsibility[] = [
+    { responsibilityId: 1, careerEntryId: 3, text: 'Built SQL dashboards for stakeholder communication' },
+    { responsibilityId: 2, careerEntryId: 3, text: 'Managed cross-functional analytics initiatives' },
+  ];
+
+  careerAchievements: CareerAchievement[] = [
+    { achievementId: 1, careerEntryId: 3, text: 'Reduced query runtime by 60%', impactMetric: '60% faster queries' },
+  ];
+
+  gapExplanations: Record<string, string> = {};
 }

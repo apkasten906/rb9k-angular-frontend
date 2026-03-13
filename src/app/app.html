@@ -6,6 +6,11 @@
        [attr.aria-current]="rla.isActive ? 'page' : null">
       <mat-icon>work</mat-icon> Applications
     </a>
+    <a mat-button routerLink="/career-history" routerLinkActive="active-link" #rch="routerLinkActive"
+       [routerLinkActiveOptions]="{exact: false}" aria-label="Career History"
+       [attr.aria-current]="rch.isActive ? 'page' : null">
+      <mat-icon>history</mat-icon> Career History
+    </a>
   </nav>
 </mat-toolbar>
 

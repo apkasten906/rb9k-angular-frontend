@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>Link Documents</h2>
 
-<mat-dialog-content [formGroup]="form" class="linker-content">
+<mat-dialog-content class="linker-content">
+<form [formGroup]="form">
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Resume</mat-label>
@@ -28,6 +29,7 @@
     </mat-select>
   </mat-form-field>
 
+</form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

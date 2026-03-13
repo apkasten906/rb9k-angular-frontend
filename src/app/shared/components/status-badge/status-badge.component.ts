@@ -12,7 +12,7 @@ type StatusGroup = 'active' | 'terminal-success' | 'terminal-declined';
   styleUrls: ['./status-badge.component.scss'],
 })
 export class StatusBadgeComponent {
-  @Input() status!: ApplicationStatus;
+  @Input({ required: true }) status!: ApplicationStatus;
 
   get statusGroup(): StatusGroup {
     switch (this.status) {

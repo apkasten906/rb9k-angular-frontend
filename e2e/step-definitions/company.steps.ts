@@ -6,6 +6,7 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import assert from 'node:assert/strict';
 import { AppWorld } from './world';
+import { ApplicationStatus } from '../../src/app/core/models/application-status.enum';
 
 // ---------------------------------------------------------------------------
 // Scenario: Add a new company by name
@@ -40,8 +41,8 @@ Then<AppWorld>('the user can select {string} for a new application', function (n
     userId: this.mock.currentUser.userId,
     companyId: company.companyId,
     jobId: null,
-    status: 'Applied' as unknown as import('../../src/app/core/models/application-status.enum').ApplicationStatus,
-    appliedDate: new Date().toISOString(),
+    status: ApplicationStatus.Applied,
+    appliedDate: new Date().toISOString().slice(0, 10),
     postingUrl: null,
     resumeId: null,
     coverLetterId: null,

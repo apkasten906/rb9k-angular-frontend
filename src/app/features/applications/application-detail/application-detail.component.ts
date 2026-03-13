@@ -101,6 +101,7 @@ export class ApplicationDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.noteForm = this.fb.group({ content: ['', Validators.required] });
+    if (!id || isNaN(id)) { this.notFound = true; return; }
     this.load(id);
   }
 

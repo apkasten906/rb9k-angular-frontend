@@ -1,7 +1,8 @@
 <mat-toolbar color="primary" class="app-toolbar">
   <span class="app-title">Resume Builder 9000</span>
-  <nav class="app-nav">
-    <a mat-button routerLink="/applications" routerLinkActive="active-link">
+  <nav class="app-nav" aria-label="Main navigation">
+    <a mat-button routerLink="/applications" routerLinkActive="active-link"
+       [routerLinkActiveOptions]="{exact: false}" aria-label="Applications">
       <mat-icon>work</mat-icon> Applications
     </a>
   </nav>

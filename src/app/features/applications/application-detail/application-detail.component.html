@@ -13,7 +13,7 @@
     <mat-card class="header-card">
       <mat-card-content>
         <div class="header-row">
-          <button mat-icon-button (click)="goBack()" matTooltip="Back to applications">
+          <button mat-icon-button (click)="goBack()" matTooltip="Back to applications" aria-label="Back to applications">
             <mat-icon>arrow_back</mat-icon>
           </button>
           <div class="header-info">
@@ -25,7 +25,7 @@
                 <span class="applied-date">
                   Applied {{ application.appliedDate | date:'mediumDate':'UTC' }}
                   <button mat-icon-button class="edit-date-btn"
-                    matTooltip="Edit applied date" (click)="startEditAppliedDate()">
+                    matTooltip="Edit applied date" aria-label="Edit applied date" (click)="startEditAppliedDate()">
                     <mat-icon>edit_calendar</mat-icon>
                   </button>
                 </span>
@@ -38,11 +38,11 @@
                     <mat-datepicker-toggle matSuffix [for]="headerPicker"></mat-datepicker-toggle>
                     <mat-datepicker #headerPicker></mat-datepicker>
                   </mat-form-field>
-                  <button mat-icon-button color="primary" matTooltip="Save date"
+                  <button mat-icon-button color="primary" matTooltip="Save date" aria-label="Save date"
                     (click)="saveAppliedDate()">
                     <mat-icon>check</mat-icon>
                   </button>
-                  <button mat-icon-button matTooltip="Cancel" (click)="cancelEditAppliedDate()">
+                  <button mat-icon-button matTooltip="Cancel" aria-label="Cancel date edit" (click)="cancelEditAppliedDate()">
                     <mat-icon>close</mat-icon>
                   </button>
                 </span>
@@ -58,7 +58,7 @@
                     <span class="no-url">No posting URL</span>
                   }
                   <button mat-icon-button class="edit-date-btn"
-                    matTooltip="Edit posting URL" (click)="startEditPostingUrl()">
+                    matTooltip="Edit posting URL" aria-label="Edit posting URL" (click)="startEditPostingUrl()">
                     <mat-icon>edit</mat-icon>
                   </button>
                 </span>
@@ -70,11 +70,11 @@
                       placeholder="https://..." />
                     <mat-icon matSuffix>link</mat-icon>
                   </mat-form-field>
-                  <button mat-icon-button color="primary" matTooltip="Save URL"
+                  <button mat-icon-button color="primary" matTooltip="Save URL" aria-label="Save URL"
                     (click)="savePostingUrl()">
                     <mat-icon>check</mat-icon>
                   </button>
-                  <button mat-icon-button matTooltip="Cancel" (click)="cancelEditPostingUrl()">
+                  <button mat-icon-button matTooltip="Cancel" aria-label="Cancel URL edit" (click)="cancelEditPostingUrl()">
                     <mat-icon>close</mat-icon>
                   </button>
                 </span>
@@ -134,7 +134,7 @@
             }
             @for (note of notes; track note.noteId) {
               <div class="note-item">
-                <div class="note-meta">{{ note.author }} · {{ note.createdAt | date:'short' }}</div>
+                <div class="note-meta">{{ note.author }} · {{ note.createdAt | date:'short':'UTC' }}</div>
                 <div class="note-content">{{ note.content }}</div>
               </div>
               <mat-divider />

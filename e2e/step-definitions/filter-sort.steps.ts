@@ -271,7 +271,7 @@ Given<AppWorld>(
           companyId,
           jobId: null,
           status,
-          appliedDate: new Date().toISOString(),
+          appliedDate: new Date().toISOString().slice(0, 10),
           postingUrl: null,
           resumeId: null,
           coverLetterId: null,

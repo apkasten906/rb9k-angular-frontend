@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,7 +37,8 @@ import { ApplicationStatus } from '../../../core/models/application-status.enum'
   templateUrl: './application-form.component.html',
   styleUrls: ['./application-form.component.scss'],
 })
-export class ApplicationFormComponent implements OnInit {
+export class ApplicationFormComponent implements OnInit, OnDestroy {
+  private readonly subscriptions = new Subscription();
   form!: FormGroup;
   companies: Company[] = [];
   availablePostings: JobPosting[] = [];
@@ -65,12 +67,14 @@ export class ApplicationFormComponent implements OnInit {
       appliedDate: [new Date(), Validators.required],
     });
 
-    this.form.get('companyId')?.valueChanges.subscribe((companyId: number) => {
-      this.availablePostings = companyId
-        ? this.jobPostingService.getByCompany(companyId)
-        : [];
-      this.form.get('jobId')?.setValue(null);
-    });
+    this.subscriptions.add(
+      this.form.get('companyId')?.valueChanges.subscribe((companyId: number) => {
+        this.availablePostings = companyId
+          ? this.jobPostingService.getByCompany(companyId)
+          : [];
+        this.form.get('jobId')?.setValue(null);
+      })
+    );
   }
 
   addCompany(): void {
@@ -136,6 +140,10 @@ export class ApplicationFormComponent implements OnInit {
 
   cancel(): void {
     this.router.navigate(['/applications']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
 

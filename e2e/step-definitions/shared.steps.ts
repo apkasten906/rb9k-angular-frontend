@@ -29,7 +29,7 @@ Given<AppWorld>('a job application in status {string}', function (statusLabel: s
     jobId: posting.jobId,
     companyId: company.companyId,
     status: ApplicationStatus.Applied,
-    appliedDate: new Date().toISOString(),
+    appliedDate: new Date().toISOString().slice(0, 10),
     postingUrl: posting.postingUrl ?? null,
     resumeId: null,
     coverLetterId: null,

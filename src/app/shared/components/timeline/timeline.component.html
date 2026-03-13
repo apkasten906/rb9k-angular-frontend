@@ -1,5 +1,5 @@
-<mat-list class="timeline-list">
-  @for (row of rows; track $index) {
+<mat-list class="timeline-list" aria-label="Application timeline">
+  @for (row of rows; track row.type === 'event' ? (row.event?.timestamp ?? $index) : 'gap-' + $index) {
     @if (row.type === 'gap') {
       <div class="gap-divider">
         <mat-divider></mat-divider>
@@ -11,7 +11,7 @@
         <mat-icon matListItemIcon>{{ iconFor(row.event.eventType) }}</mat-icon>
         <div matListItemTitle class="event-details">{{ row.event.details }}</div>
         <div matListItemLine class="event-meta">
-          {{ row.event.author }} &mdash; {{ row.event.timestamp | date:'medium' }}
+          {{ row.event.author }} &mdash; {{ row.event.timestamp | date:'medium':'UTC' }}
         </div>
       </mat-list-item>
     }

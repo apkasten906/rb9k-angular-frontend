@@ -19,7 +19,7 @@ Given<AppWorld>('a job application exists', function () {
     jobId: posting.jobId,
     companyId: company.companyId,
     status: ApplicationStatus.Applied,
-    appliedDate: new Date().toISOString(),
+    appliedDate: new Date().toISOString().slice(0, 10),
     postingUrl: null,
     resumeId: null,
     coverLetterId: null,

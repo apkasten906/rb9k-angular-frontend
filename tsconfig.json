@@ -26,7 +26,7 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "extendedDiagnostics": {
-      "defaultCategory": "warning"
+      "defaultCategory": "error"
     }
   },
   "files": [],

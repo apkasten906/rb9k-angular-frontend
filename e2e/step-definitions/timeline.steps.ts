@@ -93,7 +93,7 @@ Given<AppWorld>('job posting {string} for employer {string}', function (postingT
     const newPosting = this.jobPostingService.add({
       companyId: company.companyId,
       jobTitle: postingTitle,
-      postedDate: new Date().toISOString(),
+      postedDate: new Date().toISOString().slice(0, 10),
     });
     this.context[`posting_${postingTitle}`] = newPosting;
   }
@@ -112,7 +112,7 @@ When<AppWorld>('the user creates a job application for {string}', function (post
     jobId: posting.jobId,
     companyId: posting.companyId,
     status: ApplicationStatus.Applied,
-    appliedDate: new Date().toISOString(),
+    appliedDate: new Date().toISOString().slice(0, 10),
     postingUrl: posting.postingUrl ?? null,
     resumeId: null,
     coverLetterId: null,

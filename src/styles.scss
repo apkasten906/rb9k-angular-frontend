@@ -1,1 +1,17 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+/* Pre-built indigo-pink M2 theme */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}

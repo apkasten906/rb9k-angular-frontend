@@ -1,0 +1,31 @@
+.salary-card {
+  margin-bottom: 1rem;
+
+  mat-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    mat-icon {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+    }
+  }
+}
+
+.salary-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.salary-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  mat-form-field {
+    flex: 1 1 160px;
+  }
+}

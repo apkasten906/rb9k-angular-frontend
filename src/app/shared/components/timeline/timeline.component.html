@@ -1,0 +1,24 @@
+<mat-list class="timeline-list" aria-label="Application timeline">
+  @for (row of rows; track row.type === 'event' ? (row.event?.timestamp ?? $index) : 'gap-' + $index) {
+    @if (row.type === 'gap') {
+      <div class="gap-divider">
+        <mat-divider></mat-divider>
+        <span class="gap-label">{{ row.gapDays }} {{ row.gapDays === 1 ? 'day' : 'days' }} gap</span>
+        <mat-divider></mat-divider>
+      </div>
+    } @else if (row.event) {
+      <mat-list-item class="timeline-item">
+        <mat-icon matListItemIcon>{{ iconFor(row.event.eventType) }}</mat-icon>
+        <div matListItemTitle class="event-details">{{ row.event.details }}</div>
+        <div matListItemLine class="event-meta">
+          {{ row.event.author }} &mdash; {{ row.event.timestamp | date:'medium':'UTC' }}
+        </div>
+      </mat-list-item>
+    }
+  }
+  @if (rows.length === 0) {
+    <mat-list-item>
+      <div matListItemTitle>No activity recorded yet.</div>
+    </mat-list-item>
+  }
+</mat-list>

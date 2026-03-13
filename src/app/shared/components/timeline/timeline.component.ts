@@ -57,6 +57,7 @@ export class TimelineComponent implements OnChanges {
       case 'document_link': return 'attach_file';
       case 'salary_update': return 'attach_money';
       case 'date_change': return 'edit_calendar';
+      default: return 'help_outline';
     }
   }
 }

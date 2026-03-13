@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { ApplicationStatus } from '../../../core/models/application-status.enum';
 
@@ -6,7 +7,7 @@ type StatusGroup = 'active' | 'terminal-success' | 'terminal-declined';
 
 @Component({
   selector: 'app-status-badge',
-  imports: [MatChipsModule],
+  imports: [NgClass, MatChipsModule],
   templateUrl: './status-badge.component.html',
   styleUrls: ['./status-badge.component.scss'],
 })

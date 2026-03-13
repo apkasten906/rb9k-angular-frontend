@@ -2,4 +2,4 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
 
-await bootstrapApplication(App, appConfig);
+bootstrapApplication(App, appConfig).catch(console.error);

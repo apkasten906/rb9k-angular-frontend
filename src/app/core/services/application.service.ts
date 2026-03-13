@@ -42,7 +42,7 @@ export class ApplicationService {
       ...data,
       applicationId: this.mock.nextIds.application++,
       status: ApplicationStatus.Applied,
-      appliedDate: data.appliedDate ?? todayDate,
+      appliedDate: (data.appliedDate ?? todayDate).slice(0, 10),
     };
     this.mock.applications.push(app);
 

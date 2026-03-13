@@ -5,6 +5,7 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import assert from 'node:assert/strict';
 import { AppWorld } from './world';
+import { ApplicationStatus } from '../../src/app/core/models/application-status.enum';
 
 // ---------------------------------------------------------------------------
 // Scenario: Link a specific resume and cover letter
@@ -97,8 +98,8 @@ Given<AppWorld>('a job application linked to resume {string}', function (resumeT
     userId: this.mock.currentUser.userId,
     jobId: posting.jobId,
     companyId: company.companyId,
-    status: 'Applied' as never,
-    appliedDate: new Date().toISOString(),
+    status: ApplicationStatus.Applied,
+    appliedDate: new Date().toISOString().slice(0, 10),
     postingUrl: null,
     resumeId: resume.resumeId,
     coverLetterId: null,

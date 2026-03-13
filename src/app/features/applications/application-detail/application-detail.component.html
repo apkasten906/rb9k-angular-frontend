@@ -23,7 +23,7 @@
               <span class="sep">·</span>
               @if (!editingAppliedDate) {
                 <span class="applied-date">
-                  Applied {{ application.appliedDate | date:'mediumDate' }}
+                  Applied {{ application.appliedDate | date:'mediumDate':'UTC' }}
                   <button mat-icon-button class="edit-date-btn"
                     matTooltip="Edit applied date" (click)="startEditAppliedDate()">
                     <mat-icon>edit_calendar</mat-icon>

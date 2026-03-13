@@ -7,7 +7,7 @@ export interface JobApplication {
   jobId: number | null;
   companyId: number;
   status: ApplicationStatus;
-  /** ISO 8601 timestamp */
+  /** Date-only string (YYYY-MM-DD) */
   appliedDate: string;
   postingUrl: string | null;
   resumeId: number | null;

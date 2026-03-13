@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CompanyService } from '../../../core/services/company.service';
 import { JobPostingService } from '../../../core/services/job-posting.service';
@@ -30,6 +31,7 @@ import { ApplicationStatus } from '../../../core/models/application-status.enum'
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatTooltipModule,
   ],
   templateUrl: './application-form.component.html',
   styleUrls: ['./application-form.component.scss'],

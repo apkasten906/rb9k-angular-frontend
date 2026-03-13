@@ -67,9 +67,9 @@ export class SalaryFormComponent implements OnInit, OnChanges {
   onSave(): void {
     const val = this.form.value;
     this.saved.emit({
-      userExpectedSalary: val.userExpectedSalary ? Number(val.userExpectedSalary) : null,
-      companyOfferedSalary: val.companyOfferedSalary ? Number(val.companyOfferedSalary) : null,
-      industryAverageSalary: val.industryAverageSalary ? Number(val.industryAverageSalary) : null,
+      userExpectedSalary: val.userExpectedSalary !== null && val.userExpectedSalary !== '' ? Number(val.userExpectedSalary) : null,
+      companyOfferedSalary: val.companyOfferedSalary !== null && val.companyOfferedSalary !== '' ? Number(val.companyOfferedSalary) : null,
+      industryAverageSalary: val.industryAverageSalary !== null && val.industryAverageSalary !== '' ? Number(val.industryAverageSalary) : null,
       currency: val.currency || null,
       region: val.region || null,
     });

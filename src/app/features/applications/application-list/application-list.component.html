@@ -51,13 +51,13 @@
           <input matInput placeholder="e.g. 2026-03" (input)="applyColFilter('appliedDate', $event)" />
         </mat-form-field>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.application.appliedDate | date:'mediumDate' }}</mat-cell>
+      <mat-cell *matCellDef="let row">{{ row.application.appliedDate | date:'mediumDate':'UTC' }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button matTooltip="View details" (click)="openDetail(row)">
+        <button mat-icon-button matTooltip="View details" (click)="openDetail(row); $event.stopPropagation()">
           <mat-icon>open_in_new</mat-icon>
         </button>
       </mat-cell>
@@ -69,7 +69,7 @@
       class="clickable-row"
       (click)="openDetail(row)"
       (keydown.enter)="openDetail(row)"
-      (keydown.space)="openDetail(row)"
+      (keydown.space)="openDetail(row); $event.preventDefault()"
       tabindex="0"
       role="button">
     </mat-row>

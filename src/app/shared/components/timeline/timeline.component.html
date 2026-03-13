@@ -1,0 +1,24 @@
+<mat-list class="timeline-list">
+  @for (row of rows; track $index) {
+    @if (row.type === 'gap') {
+      <div class="gap-divider">
+        <mat-divider></mat-divider>
+        <span class="gap-label">{{ row.gapDays }} day gap</span>
+        <mat-divider></mat-divider>
+      </div>
+    } @else if (row.event) {
+      <mat-list-item class="timeline-item">
+        <mat-icon matListItemIcon>{{ iconFor(row.event.eventType) }}</mat-icon>
+        <div matListItemTitle class="event-details">{{ row.event.details }}</div>
+        <div matListItemLine class="event-meta">
+          {{ row.event.author }} &mdash; {{ row.event.timestamp | date:'medium' }}
+        </div>
+      </mat-list-item>
+    }
+  }
+  @if (rows.length === 0) {
+    <mat-list-item>
+      <div matListItemTitle>No activity recorded yet.</div>
+    </mat-list-item>
+  }
+</mat-list>

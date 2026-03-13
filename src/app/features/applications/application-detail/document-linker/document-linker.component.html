@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Link Documents</h2>
+
+<mat-dialog-content [formGroup]="form" class="linker-content">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Resume</mat-label>
+    <mat-select formControlName="resumeId">
+      <mat-option [value]="null">— None —</mat-option>
+      @for (resume of resumes; track resume.resumeId) {
+        <mat-option [value]="resume.resumeId" [disabled]="isDeleted(resume)">
+          {{ resume.title }} (v{{ resume.version }})
+          @if (isDeleted(resume)) { <span class="deleted-label"> — missing</span> }
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cover Letter</mat-label>
+    <mat-select formControlName="coverLetterId">
+      <mat-option [value]="null">— None —</mat-option>
+      @for (cl of coverLetters; track cl.coverLetterId) {
+        <mat-option [value]="cl.coverLetterId" [disabled]="isCoverLetterDeleted(cl)">
+          {{ cl.title }}
+          @if (isCoverLetterDeleted(cl)) { <span class="deleted-label"> — missing</span> }
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="confirm()">Link Documents</button>
+</mat-dialog-actions>

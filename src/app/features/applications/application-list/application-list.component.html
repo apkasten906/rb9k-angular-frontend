@@ -1,0 +1,84 @@
+<div class="list-header">
+  <h1>Job Applications</h1>
+  <button mat-raised-button color="primary" (click)="newApplication()">
+    <mat-icon>add</mat-icon> New Application
+  </button>
+</div>
+
+<mat-card>
+  <mat-table [dataSource]="dataSource" matSort class="applications-table">
+
+    <ng-container matColumnDef="company">
+      <mat-header-cell *matHeaderCellDef class="filterable-col">
+        <span mat-sort-header class="col-label">Company</span>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="col-filter-field">
+          <input matInput placeholder="Filter…" (input)="applyColFilter('company', $event)" />
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.companyName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="jobTitle">
+      <mat-header-cell *matHeaderCellDef class="filterable-col">
+        <span mat-sort-header class="col-label">Job Title</span>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="col-filter-field">
+          <input matInput placeholder="Filter…" (input)="applyColFilter('jobTitle', $event)" />
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.jobTitle }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef class="filterable-col">
+        <span mat-sort-header class="col-label">Status</span>
+        <mat-select class="col-filter-select" [(ngModel)]="colFilters.status"
+          (ngModelChange)="setStatusFilter($event)" placeholder="All">
+          <mat-option value="">All</mat-option>
+          @for (s of allStatuses; track s) {
+            <mat-option [value]="s">{{ s }}</mat-option>
+          }
+        </mat-select>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <app-status-badge [status]="row.application.status"></app-status-badge>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="appliedDate">
+      <mat-header-cell *matHeaderCellDef class="filterable-col">
+        <span mat-sort-header class="col-label">Applied</span>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="col-filter-field">
+          <input matInput placeholder="e.g. 2026-03" (input)="applyColFilter('appliedDate', $event)" />
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.application.appliedDate | date:'mediumDate' }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button matTooltip="View details" (click)="openDetail(row)">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="clickable-row"
+      (click)="openDetail(row)"
+      (keydown.enter)="openDetail(row)"
+      (keydown.space)="openDetail(row)"
+      tabindex="0"
+      role="button">
+    </mat-row>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell no-data-cell" [attr.colspan]="displayedColumns.length">
+        No applications found.
+      </td>
+    </tr>
+
+  </mat-table>
+</mat-card>

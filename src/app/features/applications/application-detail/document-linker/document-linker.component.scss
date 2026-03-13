@@ -1,0 +1,16 @@
+.linker-content {
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.deleted-label {
+  color: #b71c1c;
+  font-style: italic;
+}

@@ -2,14 +2,15 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/e2e",
-    "rootDir": "./e2e",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
     "types": [
       "node"
     ]
   },
   "include": [
-    "e2e/**/*.ts"
+    "e2e/**/*.ts",
+    "src/**/*.ts"
   ]
 }

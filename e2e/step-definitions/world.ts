@@ -68,6 +68,11 @@ export class AppWorld extends World {
     }
   }
 
+  /** Freeze the service clock to a fixed ISO timestamp for deterministic assertions. */
+  freezeTime(isoTimestamp: string): void {
+    this.mock.now = () => isoTimestamp;
+  }
+
   /** Resolve a status label string to the ApplicationStatus enum value */
   static resolveStatus(label: string): ApplicationStatus {
     const entry = Object.entries(ApplicationStatus).find(([, v]) => v === label);

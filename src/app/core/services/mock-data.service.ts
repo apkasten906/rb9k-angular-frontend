@@ -25,6 +25,9 @@ const TEN_DAYS_AGO_DATE = '2026-03-02';
 
 @Injectable({ providedIn: 'root' })
 export class MockDataService {
+  /** Replaceable clock — override in tests for deterministic timestamps. */
+  now: () => string = () => new Date().toISOString();
+
   readonly currentUser: User = {
     userId: 1,
     firstName: 'Alex',

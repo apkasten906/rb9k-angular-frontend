@@ -175,6 +175,8 @@ Given<AppWorld>('the job application has had no updates for 90 days', function (
 });
 
 When<AppWorld>('the user adds a note {string}', function (content: string) {
+  this.context['frozenTimestamp'] = '2026-03-13T12:00:00.000Z';
+  this.freezeTime(this.context['frozenTimestamp'] as string);
   this.applicationService.addNote(this.app.applicationId, content);
 });
 
@@ -207,7 +209,17 @@ Then<AppWorld>('the new entries are recorded with accurate timestamps', function
   assert.ok(recent, 'Expected at least one timeline event');
   assert.ok(recent.timestamp, 'Expected recent event to have a timestamp');
 
-  const ageMs = Date.now() - new Date(recent.timestamp).getTime();
-  const ageSecs = ageMs / 1000;
-  assert.ok(ageSecs < 10, `Expected recent event to be timestamped within the last 10 seconds, but was ${ageSecs.toFixed(1)}s ago`);
+  const frozen = this.context['frozenTimestamp'] as string | undefined;
+  if (frozen) {
+    assert.equal(
+      recent.timestamp,
+      frozen,
+      `Expected recent event timestamp to equal frozen clock value "${frozen}", got "${recent.timestamp}"`,
+    );
+  } else {
+    // Fallback: tolerate up to 60s for any environment that didn't freeze the clock
+    const ageMs = Date.now() - new Date(recent.timestamp).getTime();
+    const ageSecs = ageMs / 1000;
+    assert.ok(ageSecs < 60, `Expected recent event within 60s, but was ${ageSecs.toFixed(1)}s ago`);
+  }
 });

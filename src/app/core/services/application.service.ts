@@ -51,7 +51,7 @@ export class ApplicationService {
       applicationId: app.applicationId,
       details: 'Application created',
       author,
-      timestamp: new Date().toISOString(),
+      timestamp: this.mock.now(),
     };
     this.mock.timelineEvents.push(creationEvent);
 
@@ -72,7 +72,7 @@ export class ApplicationService {
       );
     }
 
-    const timestamp = new Date().toISOString();
+    const timestamp = this.mock.now();
     const history: ApplicationStatusHistory = {
       historyId: this.mock.nextIds.statusHistory++,
       applicationId,
@@ -105,7 +105,7 @@ export class ApplicationService {
       applicationId,
       content,
       author,
-      createdAt: new Date().toISOString(),
+      createdAt: this.mock.now(),
     };
     this.mock.notes.push(note);
 
@@ -155,7 +155,7 @@ export class ApplicationService {
       applicationId,
       details: `Applied date changed from ${oldDate} to ${newDate}`,
       author,
-      timestamp: new Date().toISOString(),
+      timestamp: this.mock.now(),
     };
     this.mock.timelineEvents.push(event);
 
@@ -194,7 +194,7 @@ export class ApplicationService {
         applicationId,
         details: `Documents linked: ${parts.join(', ')}`,
         author,
-        timestamp: new Date().toISOString(),
+        timestamp: this.mock.now(),
       };
       this.mock.timelineEvents.push(event);
     }

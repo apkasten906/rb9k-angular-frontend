@@ -22,7 +22,7 @@ export class CoverLetterService {
     const cl = this.getById(coverLetterId);
     if (cl) {
       cl.status = 'deleted';
-      cl.lastModified = new Date().toISOString();
+      cl.lastModified = this.mock.now();
     }
   }
 }

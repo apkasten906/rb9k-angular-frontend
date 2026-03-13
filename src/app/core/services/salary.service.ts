@@ -17,7 +17,7 @@ export class SalaryService {
     author: string = 'Alex Morgan'
   ): SalaryInfo {
     const existing = this.getByApplication(applicationId);
-    const timestamp = new Date().toISOString();
+    const timestamp = this.mock.now();
 
     if (existing) {
       Object.assign(existing, data);

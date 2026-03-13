@@ -28,7 +28,7 @@ export class ResumeService {
       version: (parent?.version ?? 0) + 1,
       parentResumeId,
       status: 'active',
-      createdDate: new Date().toISOString(),
+      createdDate: this.mock.now(),
       lastModified: null,
     };
     this.mock.resumes.push(newResume);
@@ -39,7 +39,7 @@ export class ResumeService {
     const resume = this.getById(resumeId);
     if (resume) {
       resume.status = 'deleted';
-      resume.lastModified = new Date().toISOString();
+      resume.lastModified = this.mock.now();
     }
   }
 }

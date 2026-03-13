@@ -4,7 +4,7 @@
   </mat-card-header>
 
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="application-form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" id="application-form" class="application-form">
 
       <!-- Company selector + inline add -->
       <div class="company-row">
@@ -92,8 +92,8 @@
 
   <mat-card-actions align="end">
     <button mat-button type="button" (click)="cancel()">Cancel</button>
-    <button mat-raised-button color="primary" type="button"
-      [disabled]="form.invalid" (click)="onSubmit()">
+    <button mat-raised-button color="primary" type="submit" form="application-form"
+      [disabled]="form.invalid">
       Create Application
     </button>
   </mat-card-actions>

@@ -29,7 +29,7 @@
 | `@delete`           | Deleting a career entry cascades related items     |
 | `@timeline`         | Viewing career timeline in chronological order     |
 | `@overlap`          | Managing overlapping roles                         |
-| `@relevance`        | Calculating relevance scores against a job posting |
+| `@relevance`        | ~~Calculating relevance scores against a job posting~~ *(deferred — see `e2e/features/03-relevance-scoring.feature`)* |
 | `@filter`           | Filtering by role category                         |
 | `@gaps`             | Career gap handling                                |
 
@@ -63,8 +63,7 @@ export interface CareerResponsibility {
   responsibilityId: number;
   careerEntryId: number;
   text: string;
-  /** 0–100, null until AI scoring has been run */
-  relevanceScore: number | null;
+  // relevanceScore removed — deferred to feat/relevance-scoring
 }
 ```
 
@@ -76,8 +75,7 @@ export interface CareerAchievement {
   careerEntryId: number;
   text: string;
   impactMetric: string | null;
-  /** 0–100, null until AI scoring has been run */
-  relevanceScore: number | null;
+  // relevanceScore removed — deferred to feat/relevance-scoring
 }
 ```
 
@@ -119,12 +117,12 @@ careerEntries: CareerEntry[] = [
 ];
 
 careerResponsibilities: CareerResponsibility[] = [
-  { responsibilityId: 1, careerEntryId: 3, text: 'Built SQL dashboards for stakeholder communication', relevanceScore: null },
-  { responsibilityId: 2, careerEntryId: 3, text: 'Managed cross-functional analytics initiatives', relevanceScore: null },
+  { responsibilityId: 1, careerEntryId: 3, text: 'Built SQL dashboards for stakeholder communication' },
+  { responsibilityId: 2, careerEntryId: 3, text: 'Managed cross-functional analytics initiatives' },
 ];
 
 careerAchievements: CareerAchievement[] = [
-  { achievementId: 1, careerEntryId: 3, text: 'Reduced query runtime by 60%', impactMetric: '60% faster queries', relevanceScore: null },
+  { achievementId: 1, careerEntryId: 3, text: 'Reduced query runtime by 60%', impactMetric: '60% faster queries' },
 ];
 
 // In nextIds:

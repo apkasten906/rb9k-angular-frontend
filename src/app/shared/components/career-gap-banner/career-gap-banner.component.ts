@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
         Gap: {{ gapStart }} &rarr; {{ gapEnd }}
         ({{ durationMonths }} month{{ durationMonths !== 1 ? 's' : '' }})
       </span>
-      @if (explanation !== undefined) {
+      @if (explanation?.trim()) {
         <div class="gap-explanation">
           <mat-icon class="explanation-icon">notes</mat-icon>
           <span class="explanation-text">{{ explanation }}</span>

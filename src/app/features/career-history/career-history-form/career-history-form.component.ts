@@ -90,8 +90,13 @@ export class CareerHistoryFormComponent implements OnInit {
     if (this.form.invalid) return;
     const val = this.form.value;
 
-    const toDateStr = (d: Date | null): string | null =>
-      d ? d.toISOString().slice(0, 10) : null;
+    const toDateStr = (d: Date | null): string | null => {
+      if (!d) return null;
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    };
 
     if (this.isEdit && this.entryId !== null) {
       this.careerService.update(this.entryId, {

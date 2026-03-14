@@ -40,38 +40,6 @@
   .add-field-sm { flex: 0 0 180px; }
 }
 
-.score-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin-right: 4px;
-
-  &.score-high { background: #c8e6c9; color: #1b5e20; }
-  &.score-mid  { background: #fff9c4; color: #f57f17; }
-  &.score-low  { background: #ffcdd2; color: #b71c1c; }
-}
-
-.top-match {
-  background: #f3e5f5;
-  border-left: 3px solid #7e57c2;
-}
-
-.score-hint { font-size: 0.875rem; color: #666; margin-bottom: 8px; }
-
-.scoring-results {
-  margin-top: 16px;
-
-  p { margin: 8px 0 4px; font-size: 0.875rem; }
-
-  mat-chip-set { display: flex; flex-wrap: wrap; gap: 4px; }
-
-  .score-high { background: #c8e6c9 !important; }
-  .score-mid  { background: #fff9c4 !important; }
-  .score-low  { background: #ffcdd2 !important; }
-}
-
 .not-found {
   padding: 48px;
   text-align: center;

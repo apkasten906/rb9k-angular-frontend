@@ -9,18 +9,6 @@ import { CareerResponsibility } from '../../src/app/core/models/career-responsib
 import { CareerAchievement } from '../../src/app/core/models/career-achievement.model';
 
 // ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function findEntry(world: AppWorld, employer: string, jobTitle: string): CareerEntry {
-  const entry = world.mock.careerEntries.find(
-    (e) => e.employer === employer && e.jobTitle === jobTitle
-  );
-  if (!entry) throw new Error(`No career entry found for "${employer}" as "${jobTitle}"`);
-  return entry;
-}
-
-// ---------------------------------------------------------------------------
 // @create
 // ---------------------------------------------------------------------------
 

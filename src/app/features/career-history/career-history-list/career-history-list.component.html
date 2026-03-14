@@ -56,10 +56,11 @@
           @for (entry of (row.entries ?? []); track entry.careerEntryId) {
             <mat-card
               class="entry-card"
+              role="button"
               (click)="navigateTo(entry.careerEntryId)"
               tabindex="0"
               (keydown.enter)="navigateTo(entry.careerEntryId)"
-              (keyup.enter)="navigateTo(entry.careerEntryId)"
+              (keydown.space)="navigateTo(entry.careerEntryId)"
               matTooltip="View details">
               <mat-card-header>
                 <mat-card-title>{{ entry.jobTitle }}</mat-card-title>

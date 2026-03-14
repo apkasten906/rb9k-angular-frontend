@@ -11,6 +11,24 @@ export interface CareerGap {
   explanation?: string;
 }
 
+/** Parse a YYYY-MM-DD string as a UTC date (avoids DST/timezone shifts). */
+function parseUTC(dateStr: string): Date {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
+}
+
+/** Return a new YYYY-MM-DD string offset by `days` from the given date string. */
+function addDays(dateStr: string, days: number): string {
+  const d = parseUTC(dateStr);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Number of days between two YYYY-MM-DD strings (UTC-safe). */
+function daysBetween(from: string, to: string): number {
+  return Math.round((parseUTC(to).getTime() - parseUTC(from).getTime()) / 86400000);
+}
+
 @Injectable({ providedIn: 'root' })
 export class CareerService {
   constructor(private readonly mock: MockDataService) {}
@@ -156,18 +174,12 @@ export class CareerService {
     const gaps: CareerGap[] = [];
 
     for (let i = 1; i < merged.length; i++) {
-      const gapStartDate = new Date(merged[i - 1].end);
-      gapStartDate.setDate(gapStartDate.getDate() + 1);
-      const gapEndDate = new Date(merged[i].start);
-      gapEndDate.setDate(gapEndDate.getDate() - 1);
+      const gapStart = addDays(merged[i - 1].end, 1);
+      const gapEnd = addDays(merged[i].start, -1);
 
-      const durationDays = Math.floor(
-        (gapEndDate.getTime() - gapStartDate.getTime()) / 86400000
-      );
+      const durationDays = daysBetween(gapStart, gapEnd) + 1; // inclusive range
 
       if (durationDays > 60) {
-        const gapStart = gapStartDate.toISOString().slice(0, 10);
-        const gapEnd = gapEndDate.toISOString().slice(0, 10);
         gaps.push({
           gapStart,
           gapEnd,
@@ -198,6 +210,10 @@ export class CareerService {
 
   setGapExplanation(userId: number, gapStart: string, explanation: string): void {
     this.mock.gapExplanations[`${userId}:${gapStart}`] = explanation;
+  }
+
+  clearGapExplanation(userId: number, gapStart: string): void {
+    delete this.mock.gapExplanations[`${userId}:${gapStart}`];
   }
 
   // ---------------------------------------------------------------------------

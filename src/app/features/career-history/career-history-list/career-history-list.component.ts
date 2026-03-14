@@ -110,11 +110,19 @@ export class CareerHistoryListComponent implements OnInit {
 
   saveGapExplanation(): void {
     if (!this.editingGap) return;
-    this.careerService.setGapExplanation(
-      this.mockData.currentUser.userId,
-      this.editingGap.gapStart,
-      this.gapExplanationDraft.trim()
-    );
+    const trimmed = this.gapExplanationDraft.trim();
+    if (trimmed) {
+      this.careerService.setGapExplanation(
+        this.mockData.currentUser.userId,
+        this.editingGap.gapStart,
+        trimmed
+      );
+    } else {
+      this.careerService.clearGapExplanation(
+        this.mockData.currentUser.userId,
+        this.editingGap.gapStart
+      );
+    }
     this.editingGap = null;
     this.load();
   }

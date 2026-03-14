@@ -1,0 +1,20 @@
+<div class="gap-banner">
+  <mat-icon class="gap-icon">hourglass_empty</mat-icon>
+  <span class="gap-label">
+    Gap: {{ gapStart }} &rarr; {{ gapEnd }}
+    ({{ durationMonths }} month{{ durationMonths !== 1 ? 's' : '' }})
+  </span>
+  @if (explanation?.trim()) {
+    <div class="gap-explanation">
+      <mat-icon class="explanation-icon">notes</mat-icon>
+      <span class="explanation-text">{{ explanation }}</span>
+      <button mat-icon-button class="edit-btn" aria-label="Edit explanation" (click)="addExplanation.emit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+  } @else {
+    <button mat-button color="accent" (click)="addExplanation.emit()">
+      Add explanation
+    </button>
+  }
+</div>

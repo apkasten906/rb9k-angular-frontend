@@ -60,7 +60,7 @@
               (click)="navigateTo(entry.careerEntryId)"
               tabindex="0"
               (keydown.enter)="navigateTo(entry.careerEntryId)"
-              (keydown.space)="navigateTo(entry.careerEntryId)"
+              (keydown.space)="onSpaceKey($event, entry.careerEntryId)"
               matTooltip="View details">
               <mat-card-header>
                 <mat-card-title>{{ entry.jobTitle }}</mat-card-title>

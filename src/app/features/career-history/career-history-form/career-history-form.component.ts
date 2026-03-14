@@ -68,17 +68,23 @@ export class CareerHistoryFormComponent implements OnInit {
     if (idParam) {
       this.isEdit = true;
       this.entryId = Number(idParam);
-      const entry = this.careerService.getById(this.entryId);
-      if (entry) {
-        this.form.patchValue({
-          employer: entry.employer,
-          jobTitle: entry.jobTitle,
-          startDate: new Date(entry.startDate),
-          endDate: entry.endDate ? new Date(entry.endDate) : null,
-          location: entry.location ?? '',
-          description: entry.description ?? '',
-        });
+      if (!Number.isFinite(this.entryId)) {
+        this.router.navigate(['/career-history']);
+        return;
       }
+      const entry = this.careerService.getById(this.entryId);
+      if (!entry) {
+        this.router.navigate(['/career-history']);
+        return;
+      }
+      this.form.patchValue({
+        employer: entry.employer,
+        jobTitle: entry.jobTitle,
+        startDate: new Date(entry.startDate),
+        endDate: entry.endDate ? new Date(entry.endDate) : null,
+        location: entry.location ?? '',
+        description: entry.description ?? '',
+      });
     }
   }
 

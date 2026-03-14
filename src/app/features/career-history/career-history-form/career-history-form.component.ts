@@ -15,7 +15,7 @@ import { MockDataService } from '../../../core/services/mock-data.service';
 function endAfterStart(group: AbstractControl): ValidationErrors | null {
   const start = group.get('startDate')?.value;
   const end = group.get('endDate')?.value;
-  if (start && end && end <= start) {
+  if (start && end && end < start) {
     return { endBeforeStart: true };
   }
   return null;

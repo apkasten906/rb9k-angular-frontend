@@ -104,7 +104,7 @@ Feature: Career History Management
     When the user adds a career entry with details:
       | employer  | job title    | start date | end date   | location      | description                      |
       | Acme Corp | Data Analyst | 2021-08-31 | 2019-06-01 | New York, USA | Analyzed sales data for insights |
-    Then a validation error is shown indicating end date must be after start date
+    Then a validation error is shown indicating end date must not be before start date
     And no career entry is saved
 
   @empty-state

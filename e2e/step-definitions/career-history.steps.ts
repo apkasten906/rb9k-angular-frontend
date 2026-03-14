@@ -25,9 +25,9 @@ When<AppWorld>(
     const startDate = row['start date'];
     const endDate = row['end date'] || null;
 
-    // Simulate form-level validation: end date must be after start date
+    // Simulate form-level validation: end date must not be before start date
     if (endDate && endDate < startDate) {
-      this.context['validationError'] = 'end date must be after start date';
+      this.context['validationError'] = 'end date must not be before start date';
       return;
     }
 
@@ -363,12 +363,12 @@ Then<AppWorld>('the gap banner shows the explanation {string}', function (expect
 // ---------------------------------------------------------------------------
 
 Then<AppWorld>(
-  'a validation error is shown indicating end date must be after start date',
+  'a validation error is shown indicating end date must not be before start date',
   function () {
     const error = this.context['validationError'] as string;
     assert.ok(error, 'Expected a validation error to be set');
     assert.ok(
-      error.includes('end date must be after start date'),
+      error.includes('end date must not be before start date'),
       `Unexpected error message: ${error}`
     );
   }

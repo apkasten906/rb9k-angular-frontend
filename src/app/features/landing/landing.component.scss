@@ -1,14 +1,12 @@
-// ─── Design tokens ───────────────────────────────────────────────────────────
-$primary: #3f51b5;       // indigo-500
-$primary-dark: #283593;  // indigo-800
-$accent: #e91e63;        // pink-500
+$primary: #3f51b5;
+$primary-dark: #283593;
+$accent: #e91e63;
 $surface: #ffffff;
 $bg-soft: #f5f7ff;
 $text-primary: #1a1a2e;
 $text-secondary: #4a4a6a;
 $radius-card: 16px;
 
-// ─── Hero ────────────────────────────────────────────────────────────────────
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -60,7 +58,7 @@ $radius-card: 16px;
   }
 
   .hero-accent {
-    color: #ffd740; // amber accent
+    color: #ffd740;
   }
 
   .hero-subline {
@@ -135,7 +133,6 @@ $radius-card: 16px;
   }
 }
 
-// ─── Hero graphic ────────────────────────────────────────────────────────────
 .hero-graphic {
   position: relative;
   height: 320px;
@@ -185,7 +182,6 @@ $radius-card: 16px;
   to   { transform: rotate(360deg); }
 }
 
-// ─── HAL 9000 Eye ────────────────────────────────────────────────────────────
 .hal-eye {
   position: absolute;
   top: 50%;
@@ -223,10 +219,7 @@ $radius-card: 16px;
     height: 44px;
     border-radius: 50%;
     background: radial-gradient(circle at 38% 35%, #ff7043, #cc1100 40%, #7f0000 100%);
-    box-shadow:
-      0 0 14px #ff2200,
-      0 0 28px rgba(255, 34, 0, 0.75),
-      0 0 56px rgba(220, 0, 0, 0.35);
+    box-shadow: 0 0 14px #ff2200, 0 0 28px rgba(255, 34, 0, 0.75), 0 0 56px rgba(220, 0, 0, 0.35);
     position: relative;
     animation: hal-pulse 3s ease-in-out infinite;
 
@@ -240,19 +233,15 @@ $radius-card: 16px;
 }
 
 @keyframes hal-pulse {
-  0%, 100% {
-    box-shadow: 0 0 14px #ff2200, 0 0 28px rgba(255, 34, 0, 0.75), 0 0 56px rgba(220, 0, 0, 0.35);
-    transform: scale(1);
-  }
   50% {
-    box-shadow: 0 0 22px #ff3300, 0 0 44px rgba(255, 51, 0, 0.95), 0 0 88px rgba(220, 0, 0, 0.55);
+    filter: brightness(1.5);
     transform: scale(1.07);
   }
 }
 
-// ─── HAL Speaks ──────────────────────────────────────────────────────────────
 .hal-speaks {
   background: #0a0a12;
+  font-family: 'Courier New', Courier, monospace;
 
   .hal-terminal {
     max-width: 960px;
@@ -264,7 +253,6 @@ $radius-card: 16px;
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
     font-weight: 700;
     color: #cc0000;
@@ -301,7 +289,6 @@ $radius-card: 16px;
 
     .hal-prompt {
       display: block;
-      font-family: 'Courier New', Courier, monospace;
       font-size: 13px;
       color: #cc0000;
       font-weight: 700;
@@ -309,7 +296,6 @@ $radius-card: 16px;
     }
 
     p {
-      font-family: 'Courier New', Courier, monospace;
       font-size: 14px;
       line-height: 1.7;
       color: rgba(255, 255, 255, 0.72);
@@ -318,7 +304,6 @@ $radius-card: 16px;
     }
 
     cite {
-      font-family: 'Courier New', Courier, monospace;
       font-size: 11px;
       color: rgba(204, 0, 0, 0.65);
       letter-spacing: 0.05em;
@@ -327,7 +312,6 @@ $radius-card: 16px;
   }
 
   .hal-disclaimer {
-    font-family: 'Courier New', Courier, monospace;
     font-size: 11px;
     color: rgba(255, 255, 255, 0.28);
     margin: 32px 0 0;
@@ -342,7 +326,6 @@ $radius-card: 16px;
   50%       { opacity: 0.25; }
 }
 
-// ─── How It Works ────────────────────────────────────────────────────────────
 .how-it-works {
   padding: 72px 64px 60px;
   background: $bg-soft;
@@ -401,12 +384,11 @@ $radius-card: 16px;
       left: calc(50% + 18px);
       width: calc(160px - 36px);
       height: 2px;
-      background: linear-gradient(90deg, $primary, lighten($primary, 20%));
+      background: linear-gradient(90deg, $primary, #7986cb);
     }
   }
 }
 
-// ─── Shared section headings ─────────────────────────────────────────────────
 .section-title {
   font-size: clamp(26px, 3vw, 36px);
   font-weight: 800;
@@ -424,7 +406,6 @@ $radius-card: 16px;
   line-height: 1.6;
 }
 
-// ─── Features grid ───────────────────────────────────────────────────────────
 .features {
   padding: 72px 64px;
   background: $surface;
@@ -491,7 +472,6 @@ $radius-card: 16px;
   }
 }
 
-// ─── CTA Banner ──────────────────────────────────────────────────────────────
 .cta-banner {
   padding: 72px 64px;
   background: linear-gradient(135deg, $primary-dark 0%, $primary 60%, #5c6bc0 100%);
@@ -533,7 +513,6 @@ $radius-card: 16px;
   }
 }
 
-// ─── Responsive ──────────────────────────────────────────────────────────────
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;

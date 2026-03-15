@@ -1,0 +1,91 @@
+<div class="career-history-list">
+  <div class="list-header">
+    <h1>Career History</h1>
+    <button mat-raised-button color="primary" (click)="addNew()">
+      <mat-icon>add</mat-icon> Add New Role
+    </button>
+  </div>
+
+  <div class="filter-row">
+    <mat-form-field appearance="outline" class="category-filter">
+      <mat-label>Filter by role category</mat-label>
+      <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()">
+        <mat-option value="">All</mat-option>
+        @for (cat of categories; track cat) {
+          <mat-option [value]="cat">{{ cat }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  @if (timelineRows.length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">work_outline</mat-icon>
+      <p>No career entries yet. Add your first role to get started.</p>
+      <button mat-raised-button color="primary" (click)="addNew()">Add your first role</button>
+    </div>
+  }
+
+  <div class="timeline">
+    @for (row of timelineRows; track $index) {
+
+      @if (row.type === 'gap') {
+        <!-- Gap banner -->
+        <app-career-gap-banner
+          [gapStart]="row.gap.gapStart"
+          [gapEnd]="row.gap.gapEnd"
+          [durationDays]="row.gap.durationDays"
+          [explanation]="row.gap.explanation"
+          (addExplanation)="onAddExplanation(row.gap)">
+        </app-career-gap-banner>
+        @if (editingGap === row.gap) {
+          <div class="gap-explanation-form">
+            <mat-form-field appearance="outline" class="explanation-field">
+              <mat-label>Explanation for this gap</mat-label>
+              <input matInput [(ngModel)]="gapExplanationDraft" (keyup.enter)="saveGapExplanation()" />
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="saveGapExplanation()">Save</button>
+            <button mat-button (click)="cancelGapExplanation()">Cancel</button>
+          </div>
+        }
+      }
+
+      @if (row.type === 'group') {
+        <!-- Entry group (single or overlapping) -->
+        <div class="entry-group" [class.overlap-group]="isOverlapping(row.entries)">
+          @for (entry of row.entries; track entry.careerEntryId) {
+            <mat-card
+              class="entry-card"
+              role="button"
+              (click)="navigateTo(entry.careerEntryId)"
+              tabindex="0"
+              (keydown.enter)="navigateTo(entry.careerEntryId)"
+              (keydown.space)="onSpaceKey($event, entry.careerEntryId)"
+              matTooltip="View details">
+              <mat-card-header>
+                <mat-card-title>{{ entry.jobTitle }}</mat-card-title>
+                <mat-card-subtitle>{{ entry.employer }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p class="dates">
+                  {{ entry.startDate }} &ndash; {{ entry.endDate ?? 'Present' }}
+                </p>
+                @if (entry.location) {
+                  <p class="location">
+                    <mat-icon inline>place</mat-icon> {{ entry.location }}
+                  </p>
+                }
+                @if (isOverlapping(row.entries)) {
+                  <p class="overlap-badge">
+                    <mat-icon inline color="accent">layers</mat-icon> Concurrent role
+                  </p>
+                }
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      }
+
+    }
+  </div>
+</div>

@@ -28,4 +28,37 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'career-history',
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/career-history/career-history-list/career-history-list.component').then(
+            (m) => m.CareerHistoryListComponent
+          ),
+      },
+      {
+        path: 'new',
+        loadComponent: () =>
+          import('./features/career-history/career-history-form/career-history-form.component').then(
+            (m) => m.CareerHistoryFormComponent
+          ),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./features/career-history/career-history-detail/career-history-detail.component').then(
+            (m) => m.CareerHistoryDetailComponent
+          ),
+      },
+      {
+        path: ':id/edit',
+        loadComponent: () =>
+          import('./features/career-history/career-history-form/career-history-form.component').then(
+            (m) => m.CareerHistoryFormComponent
+          ),
+      },
+    ],
+  },
 ];

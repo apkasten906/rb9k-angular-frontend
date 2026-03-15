@@ -1,6 +1,7 @@
 default:
   paths:
     - e2e/features/**/*.feature
+  tags: 'not @future-feature'
   require:
     - e2e/step-definitions/**/*.ts
   requireModule:

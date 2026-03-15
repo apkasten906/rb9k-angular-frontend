@@ -14,6 +14,14 @@ Given<AppWorld>('the current timestamp is {string}', function (timestamp: string
   this.context['scenarioTimestamp'] = timestamp;
 });
 
+Given<AppWorld>('the user is signed in', function () {
+  // No-op at service layer: currentUser is pre-seeded on MockDataService.
+});
+
+Given<AppWorld>('the user is on the career history page', function () {
+  // No-op at service layer: represents navigation context only.
+});
+
 // ---------------------------------------------------------------------------
 // Set up an application at a given status by creating and advancing it
 // ---------------------------------------------------------------------------

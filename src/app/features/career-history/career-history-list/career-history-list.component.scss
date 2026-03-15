@@ -1,0 +1,60 @@
+.career-history-list {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.filter-row {
+  margin-bottom: 16px;
+  .category-filter { width: 280px; }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  color: #888;
+
+  .empty-icon {
+    font-size: 64px;
+    height: 64px;
+    width: 64px;
+    color: #ccc;
+  }
+
+  p { margin: 16px 0; }
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.entry-group {
+  display: flex;
+  gap: 12px;
+}
+
+.overlap-group {
+  border-left: 4px solid #7e57c2;
+  padding-left: 8px;
+}
+
+.entry-card {
+  cursor: pointer;
+  flex: 1;
+  transition: box-shadow 0.2s;
+
+  &:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+
+  .dates { font-size: 0.875rem; color: #666; margin: 4px 0; }
+  .location { font-size: 0.875rem; color: #888; margin: 4px 0; }
+  .overlap-badge { font-size: 0.8rem; color: #7e57c2; margin: 4px 0; }
+}

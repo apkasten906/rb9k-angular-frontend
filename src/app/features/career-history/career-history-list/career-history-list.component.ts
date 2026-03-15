@@ -98,7 +98,7 @@ export class CareerHistoryListComponent implements OnInit {
     this.router.navigate(['/career-history', entryId]);
   }
 
-  onSpaceKey(event: KeyboardEvent, entryId: number): void {
+  onSpaceKey(event: Event, entryId: number): void {
     event.preventDefault();
     this.navigateTo(entryId);
   }

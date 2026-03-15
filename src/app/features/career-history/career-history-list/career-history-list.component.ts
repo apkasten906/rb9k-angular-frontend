@@ -13,11 +13,9 @@ import { MockDataService } from '../../../core/services/mock-data.service';
 import { CareerEntry } from '../../../core/models/career-entry.model';
 import { CareerGapBannerComponent } from '../../../shared/components/career-gap-banner/career-gap-banner.component';
 
-export interface TimelineRow {
-  type: 'group' | 'gap';
-  entries?: CareerEntry[];
-  gap?: CareerGap;
-}
+export type TimelineRow =
+  | { type: 'gap'; gap: CareerGap }
+  | { type: 'group'; entries: CareerEntry[] };
 
 @Component({
   selector: 'app-career-history-list',

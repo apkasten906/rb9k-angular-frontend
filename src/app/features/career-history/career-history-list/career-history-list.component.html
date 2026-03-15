@@ -32,10 +32,10 @@
       @if (row.type === 'gap') {
         <!-- Gap banner -->
         <app-career-gap-banner
-          [gapStart]="row.gap?.gapStart ?? ''"
-          [gapEnd]="row.gap?.gapEnd ?? ''"
-          [durationDays]="row.gap?.durationDays ?? 0"
-          [explanation]="row.gap?.explanation"
+          [gapStart]="row.gap.gapStart"
+          [gapEnd]="row.gap.gapEnd"
+          [durationDays]="row.gap.durationDays"
+          [explanation]="row.gap.explanation"
           (addExplanation)="onAddExplanation(row.gap)">
         </app-career-gap-banner>
         @if (editingGap === row.gap) {
@@ -52,8 +52,8 @@
 
       @if (row.type === 'group') {
         <!-- Entry group (single or overlapping) -->
-        <div class="entry-group" [class.overlap-group]="isOverlapping(row.entries ?? [])">
-          @for (entry of (row.entries ?? []); track entry.careerEntryId) {
+        <div class="entry-group" [class.overlap-group]="isOverlapping(row.entries)">
+          @for (entry of row.entries; track entry.careerEntryId) {
             <mat-card
               class="entry-card"
               role="button"
@@ -75,7 +75,7 @@
                     <mat-icon inline>place</mat-icon> {{ entry.location }}
                   </p>
                 }
-                @if (isOverlapping(row.entries ?? [])) {
+                @if (isOverlapping(row.entries)) {
                   <p class="overlap-badge">
                     <mat-icon inline color="accent">layers</mat-icon> Concurrent role
                   </p>

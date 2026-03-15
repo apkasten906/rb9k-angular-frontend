@@ -42,10 +42,11 @@ jobs:
         run: npm ci
 
       - name: Configure Pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Build application
-        run: npm run build -- --base-href /rb9k-angular-frontend/
+        run: npm run build -- --base-href ${{ steps.pages.outputs.base_path }}
 
       - name: Copy index.html to 404.html for SPA routing
         run: cp dist/rb9k-app/browser/index.html dist/rb9k-app/browser/404.html

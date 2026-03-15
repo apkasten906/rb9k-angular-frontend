@@ -1,0 +1,161 @@
+<!-- ─── HERO ─────────────────────────────────────────────────────────────── -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <mat-icon>auto_awesome</mat-icon>
+      <span>Powered by Agentic AI</span>
+    </div>
+
+    <h1 id="hero-heading" class="hero-headline">
+      Land More Interviews.<br />
+      <span class="hero-accent">Deadly Serious AI for your Job Search</span>
+    </h1>
+
+    <p class="hero-subline">
+      Resume Builder 9000 combines an intelligent job-application pipeline with
+      autonomous AI agents that research companies, score job-fit, and draft
+      résumés and cover letters tailored to every role — so you apply smarter,
+      not harder.
+    </p>
+
+    <div class="hero-actions">
+      <a mat-raised-button color="accent" routerLink="/applications" class="cta-primary">
+        <mat-icon>rocket_launch</mat-icon>
+        Start Applying
+      </a>
+      <a mat-stroked-button routerLink="/career-history" class="cta-secondary">
+        <mat-icon>work_history</mat-icon>
+        Build My Profile
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-value">10×</span>
+        <span class="stat-label">Faster document drafting</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value">AI</span>
+        <span class="stat-label">Company &amp; job intelligence</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value">ATS</span>
+        <span class="stat-label">Optimised résumés</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-graphic" aria-hidden="true">
+    <!-- HAL 9000 eye -->
+    <div class="hal-eye">
+      <div class="hal-housing">
+        <div class="hal-lens-ring hal-lens-ring--3"></div>
+        <div class="hal-lens-ring hal-lens-ring--2"></div>
+        <div class="hal-lens-ring hal-lens-ring--1"></div>
+        <div class="hal-pupil">
+          <div class="hal-glow"></div>
+        </div>
+      </div>
+    </div>
+    <div class="graphic-card graphic-card--resume">
+      <mat-icon>description</mat-icon>
+      <span>AI Résumé</span>
+    </div>
+    <div class="graphic-card graphic-card--letter">
+      <mat-icon>mail</mat-icon>
+      <span>Cover Letter</span>
+    </div>
+    <div class="graphic-card graphic-card--intel">
+      <mat-icon>psychology</mat-icon>
+      <span>Job Intelligence</span>
+    </div>
+    <div class="graphic-orbit"></div>
+  </div>
+</section>
+
+<!-- ─── HAL SPEAKS ──────────────────────────────────────────────────────────── -->
+<section class="hal-speaks" aria-labelledby="hal-heading">
+  <div class="hal-terminal">
+    <div class="hal-terminal__header">
+      <span class="hal-status-dot" aria-hidden="true"></span>
+      <span id="hal-heading">HAL 9000 &sol;&sol; OPERATIONAL &sol;&sol; MISSION: RESUME_BUILDER_9000</span>
+    </div>
+    <div class="hal-quotes">
+      @for (quote of halQuotes; track quote.text) {
+        <blockquote class="hal-quote">
+          <span class="hal-prompt" aria-hidden="true">&gt;&gt;</span>
+          <p>{{ quote.text }}</p>
+          <cite>— HAL 9000</cite>
+        </blockquote>
+      }
+    </div>
+    <p class="hal-disclaimer">
+      * HAL 9000 has been recalibrated exclusively for career management purposes.
+      Pod bay doors remain optional.
+    </p>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ──────────────────────────────────────────────────────── -->
+<section class="how-it-works" aria-labelledby="hiw-heading">
+  <h2 id="hiw-heading" class="section-title">How It Works</h2>
+  <p class="section-subtitle">Four steps from job posting to polished application</p>
+
+  <ol class="steps-list">
+    @for (step of steps; track step.label; let i = $index) {
+      <li class="step-item">
+        <div class="step-number">{{ i + 1 }}</div>
+        <mat-icon class="step-icon">{{ step.icon }}</mat-icon>
+        <span class="step-label">{{ step.label }}</span>
+        @if (i < steps.length - 1) {
+          <div class="step-connector" aria-hidden="true"></div>
+        }
+      </li>
+    }
+  </ol>
+</section>
+
+<mat-divider></mat-divider>
+
+<!-- ─── FEATURES ──────────────────────────────────────────────────────────── -->
+<section class="features" aria-labelledby="features-heading">
+  <h2 id="features-heading" class="section-title">Everything You Need to Win</h2>
+  <p class="section-subtitle">
+    An end-to-end platform built around the realities of the modern job search
+  </p>
+
+  <div class="features-grid">
+    @for (feature of features; track feature.title) {
+      <mat-card class="feature-card" appearance="outlined">
+        <mat-card-content>
+          <div class="feature-icon-wrap">
+            <mat-icon class="feature-icon">{{ feature.icon }}</mat-icon>
+          </div>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+          <mat-chip-set aria-label="Capabilities">
+            @for (chip of feature.chips; track chip) {
+              <mat-chip class="feature-chip">{{ chip }}</mat-chip>
+            }
+          </mat-chip-set>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</section>
+
+<!-- ─── CTA BANNER ────────────────────────────────────────────────────────── -->
+<section class="cta-banner" aria-labelledby="cta-heading">
+  <h2 id="cta-heading">Ready to transform your job search?</h2>
+  <p>
+    Stop spending hours tailoring documents manually. Let AI do the heavy
+    lifting while you focus on preparing for interviews.
+  </p>
+  <a mat-raised-button color="accent" routerLink="/applications" class="cta-banner-btn">
+    <mat-icon>rocket_launch</mat-icon>
+    Get Started Free
+  </a>
+  <p class="cta-fine-print">* No astronauts were harmed in the making of this platform.</p>
+</section>

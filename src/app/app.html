@@ -1,6 +1,11 @@
 <mat-toolbar color="primary" class="app-toolbar">
   <span class="app-title">Resume Builder 9000</span>
   <nav class="app-nav" aria-label="Main navigation">
+    <a mat-button routerLink="/" routerLinkActive="active-link" #rlt="routerLinkActive"
+       [routerLinkActiveOptions]="{exact: true}" aria-label="Home"
+       [attr.aria-current]="rlt.isActive ? 'page' : null">
+      <mat-icon>home</mat-icon> Home
+    </a>
     <a mat-button routerLink="/applications" routerLinkActive="active-link" #rla="routerLinkActive"
        [routerLinkActiveOptions]="{exact: false}" aria-label="Applications"
        [attr.aria-current]="rla.isActive ? 'page' : null">

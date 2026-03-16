@@ -146,6 +146,43 @@
   </div>
 </section>
 
+<!-- ─── PLATFORM STATUS ─────────────────────────────────────────────────── -->
+<section class="platform-status" aria-labelledby="status-heading">
+  <h2 id="status-heading" class="section-title">Platform Status</h2>
+  <p class="section-subtitle">
+    Two features are live today. The full AI-powered pipeline is being built in order of impact.
+  </p>
+
+  <div class="status-legend" aria-hidden="true">
+    <span class="status-pill status-pill--live"><mat-icon>check_circle</mat-icon> Live</span>
+    <span class="status-pill status-pill--soon"><mat-icon>schedule</mat-icon> Coming Soon</span>
+  </div>
+
+  <ul class="status-grid">
+    @for (item of roadmap; track item.name) {
+      <li class="status-item status-item--{{ item.status }}">
+        <mat-icon class="status-item__icon">{{ item.icon }}</mat-icon>
+        <span class="status-item__name">
+          @if (item.route) {
+            <a [routerLink]="item.route">{{ item.name }}</a>
+          } @else {
+            {{ item.name }}
+          }
+        </span>
+        <span class="status-badge status-badge--{{ item.status }}" aria-label="{{ item.status === 'live' ? 'Available' : 'Coming soon' }}">
+          @if (item.status === 'live') {
+            <mat-icon>check_circle</mat-icon> Live
+          } @else {
+            <mat-icon>schedule</mat-icon> Soon
+          }
+        </span>
+      </li>
+    }
+  </ul>
+</section>
+
+<mat-divider></mat-divider>
+
 <!-- ─── CTA BANNER ────────────────────────────────────────────────────────── -->
 <section class="cta-banner" aria-labelledby="cta-heading">
   <h2 id="cta-heading">Ready to transform your job search?</h2>

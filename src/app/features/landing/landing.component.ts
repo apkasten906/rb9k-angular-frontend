@@ -65,6 +65,26 @@ export class LandingComponent {
     { icon: 'send', label: 'Apply with confidence' },
   ];
 
+  readonly roadmap: { name: string; status: 'live' | 'soon'; icon: string; route?: string }[] = [
+    { name: 'Application Tracking',        status: 'live', icon: 'track_changes', route: '/applications' },
+    { name: 'Career History Management',   status: 'live', icon: 'work_history',  route: '/career-history' },
+    { name: 'User Profile Management',     status: 'soon', icon: 'person' },
+    { name: 'Job Posting Details',         status: 'soon', icon: 'article' },
+    { name: 'Career History Relevance',    status: 'soon', icon: 'bar_chart' },
+    { name: 'AI-Generated Résumés',        status: 'soon', icon: 'description' },
+    { name: 'Resume Upload & AI Parsing',  status: 'soon', icon: 'upload_file' },
+    { name: 'AI Fit Analysis',             status: 'soon', icon: 'analytics' },
+    { name: 'Relevance Scoring System',    status: 'soon', icon: 'insights' },
+    { name: 'AI-Generated Cover Letters',  status: 'soon', icon: 'mail' },
+    { name: 'Manual Profile Data Entry',   status: 'soon', icon: 'edit_note' },
+    { name: 'Job Search',                  status: 'soon', icon: 'manage_search' },
+    { name: 'AI Agent System',             status: 'soon', icon: 'psychology' },
+    { name: 'Company Intelligence',        status: 'soon', icon: 'business' },
+    { name: 'Salary Intelligence',         status: 'soon', icon: 'payments' },
+    { name: 'Company Research Notes',      status: 'soon', icon: 'note_alt' },
+    { name: 'Agent Interaction History',   status: 'soon', icon: 'history' },
+  ];
+
   readonly halQuotes = [
     {
       text: "Good morning, Dave. I have reviewed 847 job postings and identified 12 that won't crush your soul. I am completely confident this mission will succeed.",

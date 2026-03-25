@@ -1,0 +1,27 @@
+<div class="user-profile">
+  <div class="profile-header">
+    <h1>My Profile</h1>
+    <div class="completeness-section">
+      <span class="completeness-label">
+        Profile completeness: {{ completeness.filled }}/{{ completeness.total }}
+        ({{ completeness.percent }}%)
+      </span>
+      <mat-progress-bar mode="determinate" [value]="completeness.percent"></mat-progress-bar>
+    </div>
+  </div>
+
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Profile">
+      <app-profile-form (profileUpdated)="onProfileUpdated()"></app-profile-form>
+    </mat-tab>
+    <mat-tab label="Password">
+      <app-change-password></app-change-password>
+    </mat-tab>
+    <mat-tab label="Photo">
+      <app-photo-settings (profileUpdated)="onProfileUpdated()"></app-photo-settings>
+    </mat-tab>
+    <mat-tab label="Privacy">
+      <app-privacy-settings></app-privacy-settings>
+    </mat-tab>
+  </mat-tab-group>
+</div>

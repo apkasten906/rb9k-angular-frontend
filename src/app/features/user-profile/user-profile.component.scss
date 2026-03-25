@@ -1,0 +1,22 @@
+.user-profile {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.profile-header {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0 0 0.75rem;
+  }
+}
+
+.completeness-section {
+  .completeness-label {
+    display: block;
+    font-size: 0.875rem;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 0.25rem;
+  }
+}

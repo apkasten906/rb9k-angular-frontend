@@ -33,6 +33,11 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'profile',
+    loadComponent: () =>
+      import('./features/user-profile/user-profile.component').then((m) => m.UserProfileComponent),
+  },
+  {
     path: 'career-history',
     children: [
       {

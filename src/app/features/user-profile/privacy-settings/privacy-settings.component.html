@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="save()" class="privacy-settings-form">
+  <h2>Privacy Settings</h2>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Contact Details visibility</mat-label>
+    <mat-select formControlName="contactDetails">
+      @for (option of visibilityOptions; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Professional Summary visibility</mat-label>
+    <mat-select formControlName="summary">
+      @for (option of visibilityOptions; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="form-actions">
+    <button mat-raised-button color="primary" type="submit">Save Privacy Settings</button>
+  </div>
+</form>

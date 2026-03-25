@@ -13,6 +13,7 @@ import { TimelineEvent } from '../models/timeline-event.model';
 import { CareerEntry } from '../models/career-entry.model';
 import { CareerResponsibility } from '../models/career-responsibility.model';
 import { CareerAchievement } from '../models/career-achievement.model';
+import { UserProfile } from '../models/user-profile.model';
 
 const NOW = '2026-03-12T10:26:06.997Z';
 const NINETY_DAYS_AGO = '2025-12-11T10:26:06.997Z';
@@ -263,4 +264,18 @@ export class MockDataService {
   ];
 
   gapExplanations: Record<string, string> = {};
+
+  profiles: UserProfile[] = [
+    {
+      userId: 1,
+      email: 'alex@example.com',
+      password: 'MockPass!1',
+      firstName: 'Alex',
+      lastName: 'Morgan',
+      phone: '+1 415 555 0100',
+      location: 'San Francisco, CA',
+      linkedInUrl: 'https://linkedin.com/in/alex-morgan',
+      privacy: { contactDetails: 'Everyone', summary: 'Everyone' },
+    },
+  ];
 }

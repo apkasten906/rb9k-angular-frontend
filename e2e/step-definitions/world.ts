@@ -17,6 +17,7 @@ import { CoverLetterService } from '../../src/app/core/services/cover-letter.ser
 import { SalaryService } from '../../src/app/core/services/salary.service';
 import { TimelineService } from '../../src/app/core/services/timeline.service';
 import { CareerService } from '../../src/app/core/services/career.service';
+import { UserProfileService } from '../../src/app/core/services/user-profile.service';
 import { JobApplication } from '../../src/app/core/models/job-application.model';
 import { CareerEntry } from '../../src/app/core/models/career-entry.model';
 import { ApplicationStatus } from '../../src/app/core/models/application-status.enum';
@@ -31,6 +32,7 @@ export class AppWorld extends World {
   salaryService: SalaryService;
   timelineService: TimelineService;
   careerService: CareerService;
+  userProfileService: UserProfileService;
 
   /** The application under test for the current scenario */
   currentApplication: JobApplication | null = null;
@@ -52,6 +54,7 @@ export class AppWorld extends World {
     this.salaryService = new SalaryService(this.mock);
     this.timelineService = new TimelineService(this.mock);
     this.careerService = new CareerService(this.mock);
+    this.userProfileService = new UserProfileService(this.mock);
   }
 
   /** Helper: get the current application (throws if none) */

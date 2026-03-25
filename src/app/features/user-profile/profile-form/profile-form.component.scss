@@ -1,0 +1,34 @@
+.profile-form {
+  padding: 1.5rem 0;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-actions {
+  padding-top: 0.5rem;
+}

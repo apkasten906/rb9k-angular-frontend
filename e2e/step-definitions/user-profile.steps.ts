@@ -91,7 +91,7 @@ Given<AppWorld>('an existing account uses email {string}', function (email: stri
 When<AppWorld>('the user enters email {string}', function (email: string) {
   // TODO: replace with Playwright page.fill('[data-testid=email-input]', email)
   this.context['enteredEmail'] = email;
-  const EMAIL_PATTERN = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!EMAIL_PATTERN.test(email)) {
     this.context['validationError'] = 'Enter a valid email address';
     return;
@@ -468,7 +468,7 @@ Given<AppWorld>(
       if (field === 'linkedInUrl') profile.linkedInUrl = 'https://linkedin.com/in/alex';
       else if (field === 'portfolioUrl') profile.portfolioUrl = 'https://alex.dev';
       else if (field === 'photoFilename') profile.photoFilename = 'headshot.jpg';
-      else (profile as Record<string, unknown>)[field as string] = 'filled';
+      else Object.assign(profile, { [field]: 'filled' });
       remaining--;
     }
 
@@ -503,8 +503,8 @@ When<AppWorld>(
   function (contactDetails: string, summary: string) {
     // TODO: replace with Playwright mat-select interactions
     this.userProfileService.setPrivacy(this.mock.currentUser.userId, {
-      contactDetails: contactDetails as 'Everyone' | 'Connections' | 'Only me',
-      summary: summary as 'Everyone' | 'Connections' | 'Only me',
+      contactDetails: contactDetails as PrivacyVisibility,
+      summary: summary as PrivacyVisibility,
     });
   }
 );

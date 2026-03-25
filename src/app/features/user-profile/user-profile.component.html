@@ -6,7 +6,7 @@
         Profile completeness: {{ completeness.filled }}/{{ completeness.total }}
         ({{ completeness.percent }}%)
       </span>
-      <mat-progress-bar mode="determinate" [value]="completeness.percent"></mat-progress-bar>
+      <mat-progress-bar data-testid="completeness-bar" mode="determinate" [value]="completeness.percent"></mat-progress-bar>
     </div>
   </div>
 

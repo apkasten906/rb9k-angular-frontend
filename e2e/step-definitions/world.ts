@@ -1,13 +1,15 @@
 /**
- * Cucumber World — holds service instances for all step definitions.
+ * Cucumber World — holds service instances and Playwright browser objects for all step definitions.
  *
  * Services are instantiated directly (no Angular DI / TestBed) so they run
- * cleanly in the Node/ts-node environment.
+ * cleanly in the Node/ts-node environment alongside Playwright browser interactions.
  *
- * TODO: replace service method calls with `page.xxx()` Playwright calls when
- * wiring up the real browser layer.
+ * Before each scenario, browser.hooks.ts opens a new BrowserContext + Page.
+ * navigateTo() syncs the Node-side mock state into the browser via addInitScript
+ * so that window.__playwrightTestData is available when MockDataService initialises.
  */
 import { setWorldConstructor, IWorldOptions, World } from '@cucumber/cucumber';
+import { BrowserContext, Page } from '@playwright/test';
 import { MockDataService } from '../../src/app/core/services/mock-data.service';
 import { ApplicationService } from '../../src/app/core/services/application.service';
 import { CompanyService } from '../../src/app/core/services/company.service';
@@ -34,17 +36,17 @@ export class AppWorld extends World {
   careerService: CareerService;
   userProfileService: UserProfileService;
 
-  /** The application under test for the current scenario */
+  /** Playwright browser context — opened per scenario by browser.hooks.ts. */
+  browserContext!: BrowserContext;
+  /** Playwright page — opened per scenario by browser.hooks.ts. */
+  page!: Page;
+
   currentApplication: JobApplication | null = null;
-  /** The career entry under test for the current scenario */
   currentCareerEntry: CareerEntry | null = null;
-  /** Arbitrary extra state shared between steps */
   context: Record<string, unknown> = {};
 
   constructor(options: IWorldOptions) {
     super(options);
-
-    // Fresh mock data for every scenario
     this.mock = new MockDataService();
     this.applicationService = new ApplicationService(this.mock);
     this.companyService = new CompanyService(this.mock);
@@ -57,32 +59,40 @@ export class AppWorld extends World {
     this.userProfileService = new UserProfileService(this.mock);
   }
 
-  /** Helper: get the current application (throws if none) */
+  /**
+   * Navigate to a path, first seeding the browser's MockDataService with the
+   * current Node-side mock state via window.__playwrightTestData (read by the
+   * MockDataService constructor when running in Angular).
+   */
+  async navigateTo(path: string): Promise<void> {
+    const profiles = this.mock.profiles;
+    await this.page.addInitScript((testData) => {
+      (globalThis as unknown as Record<string, unknown>)['__playwrightTestData'] = testData;
+    }, { profiles });
+    await this.page.goto(path);
+  }
+
   get app(): JobApplication {
     if (!this.currentApplication) throw new Error('No current application set in world');
     return this.currentApplication;
   }
 
-  /** Helper: set current application by ID */
   setCurrentById(id: number): void {
     const app = this.applicationService.getById(id);
     if (!app) throw new Error(`Application ${id} not found`);
     this.currentApplication = app;
   }
 
-  /** Helper: re-fetch the current application after a mutation */
   refresh(): void {
     if (this.currentApplication) {
       this.setCurrentById(this.currentApplication.applicationId);
     }
   }
 
-  /** Freeze the service clock to a fixed ISO timestamp for deterministic assertions. */
   freezeTime(isoTimestamp: string): void {
     this.mock.now = () => isoTimestamp;
   }
 
-  /** Resolve a status label string to the ApplicationStatus enum value */
   static resolveStatus(label: string): ApplicationStatus {
     const entry = Object.entries(ApplicationStatus).find(([, v]) => v === label);
     if (!entry) throw new Error(`Unknown status label: "${label}"`);

@@ -278,4 +278,17 @@ export class MockDataService {
       privacy: { contactDetails: 'Everyone', summary: 'Everyone' },
     },
   ];
+
+  constructor() {
+    // Playwright E2E bridge: when running browser tests, addInitScript seeds
+    // globalThis.__playwrightTestData before Angular boots so tests control mock state.
+    if (typeof globalThis['window'] !== 'undefined') {
+      const g = globalThis as unknown as Record<string, unknown>;
+      const testData = g['__playwrightTestData'] as { profiles?: UserProfile[] } | undefined;
+      if (testData?.profiles) {
+        this.profiles = [...testData.profiles];
+      }
+      g['__mock'] = this;
+    }
+  }
 }

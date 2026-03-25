@@ -23,7 +23,7 @@ import { PrivacySettingsComponent } from './privacy-settings/privacy-settings.co
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  profile!: UserProfile;
+  profile: UserProfile | null = null;
   completeness = { filled: 0, total: 12, percent: 0 };
 
   constructor(
@@ -36,8 +36,13 @@ export class UserProfileComponent implements OnInit {
   }
 
   loadProfile(): void {
-    this.profile = this.profileService.getProfile(this.mockData.currentUser.userId);
-    this.completeness = this.profileService.getCompleteness(this.mockData.currentUser.userId);
+    try {
+      this.profile = this.profileService.getProfile(this.mockData.currentUser.userId);
+      this.completeness = this.profileService.getCompleteness(this.mockData.currentUser.userId);
+    } catch {
+      this.profile = null;
+      this.completeness = { filled: 0, total: 12, percent: 0 };
+    }
   }
 
   onProfileUpdated(): void {

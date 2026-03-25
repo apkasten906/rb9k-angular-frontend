@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest --config jest.config.ts",
     "test:coverage": "jest --config jest.config.ts --coverage",
-    "cucumber": "cucumber-js"
+    "cucumber": "cucumber-js",
+    "cucumber:e2e": "cucumber-js --tags 'not @future-feature'"
   },
   "private": true,
   "packageManager": "npm@11.9.0",
@@ -32,6 +33,7 @@
     "@angular/compiler-cli": "21.2.2",
     "@angular/language-service": "21.2.2",
     "@cucumber/cucumber": "^12.7.0",
+    "@playwright/test": "^1.58.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.4.0",
     "jest": "^30.3.0",

@@ -3,12 +3,14 @@
 
   <div class="photo-preview">
     @if (currentPhoto) {
-      <div class="photo-placeholder has-photo" aria-label="Profile photo: {{ currentPhoto }}">
+      <div class="photo-placeholder has-photo" data-testid="profile-photo"
+           aria-label="Profile photo: {{ currentPhoto }}">
         <mat-icon>photo</mat-icon>
         <span class="photo-name">{{ currentPhoto }}</span>
       </div>
     } @else {
-      <div class="photo-placeholder default-avatar" aria-label="Default avatar">
+      <div class="photo-placeholder default-avatar" data-testid="default-avatar"
+           aria-label="Default avatar">
         <mat-icon>account_circle</mat-icon>
         <span>No photo uploaded</span>
       </div>
@@ -29,11 +31,12 @@
       type="file"
       accept=".jpg,.jpeg,.png"
       (change)="onFileSelected($event)"
+      data-testid="photo-input"
       class="file-input"
       aria-label="Upload profile photo"
     />
     @if (currentPhoto) {
-      <button mat-stroked-button color="warn" (click)="removePhoto()">
+      <button mat-stroked-button color="warn" data-testid="remove-photo-btn" (click)="removePhoto()">
         <mat-icon>delete</mat-icon> Remove Photo
       </button>
     }

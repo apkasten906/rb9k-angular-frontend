@@ -3,7 +3,7 @@
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Contact Details visibility</mat-label>
-    <mat-select formControlName="contactDetails">
+    <mat-select formControlName="contactDetails" data-testid="contact-details-select">
       @for (option of visibilityOptions; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }
@@ -12,7 +12,7 @@
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Professional Summary visibility</mat-label>
-    <mat-select formControlName="summary">
+    <mat-select formControlName="summary" data-testid="summary-select">
       @for (option of visibilityOptions; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }
@@ -20,6 +20,6 @@
   </mat-form-field>
 
   <div class="form-actions">
-    <button mat-raised-button color="primary" type="submit">Save Privacy Settings</button>
+    <button mat-raised-button color="primary" type="submit" data-testid="privacy-save-btn">Save Privacy Settings</button>
   </div>
 </form>

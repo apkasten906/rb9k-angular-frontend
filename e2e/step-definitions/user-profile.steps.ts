@@ -4,7 +4,7 @@
 import { Given, When, Then, DataTable } from '@cucumber/cucumber';
 import assert from 'node:assert/strict';
 import { AppWorld } from './world';
-import { UserProfile } from '../../src/app/core/models/user-profile.model';
+import { UserProfile, PrivacyVisibility } from '../../src/app/core/models/user-profile.model';
 
 // ---------------------------------------------------------------------------
 // Background / shared Given steps
@@ -128,6 +128,7 @@ Given<AppWorld>('the user has a basic profile', function () {
       password: 'MockPass!1',
       firstName: 'Alex',
       lastName: 'Morgan',
+      linkedInUrl: 'https://linkedin.com/in/alex-morgan',
       privacy: { contactDetails: 'Everyone', summary: 'Everyone' },
     });
   }

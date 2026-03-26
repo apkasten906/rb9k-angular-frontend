@@ -80,6 +80,7 @@ export class ProfileFormComponent implements OnInit {
 
   onEmailBlur(): void {
     const email: string = this.form.get('email')?.value;
+    const emailControl = this.form.get('email');
     try {
       const currentEmail = this.profileService.getProfile(this.mockData.currentUser.userId).email;
       if (email && email !== currentEmail) {
@@ -94,6 +95,16 @@ export class ProfileFormComponent implements OnInit {
       this.emailDuplicateError = email
         ? this.mockData.profiles.some((p) => p.email === email)
         : false;
+    }
+    // Make the control invalid so Angular Material renders the mat-error
+    if (this.emailDuplicateError) {
+      emailControl?.setErrors({ ...emailControl.errors, duplicate: true });
+    } else {
+      const errors = emailControl?.errors;
+      if (errors?.['duplicate']) {
+        const { duplicate: _d, ...rest } = errors;
+        emailControl?.setErrors(Object.keys(rest).length ? rest : null);
+      }
     }
   }
 

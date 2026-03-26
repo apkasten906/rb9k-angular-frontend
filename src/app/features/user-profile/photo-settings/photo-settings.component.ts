@@ -26,7 +26,11 @@ export class PhotoSettingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentPhoto = this.profileService.getProfile(this.mockData.currentUser.userId).photoFilename;
+    try {
+      this.currentPhoto = this.profileService.getProfile(this.mockData.currentUser.userId).photoFilename;
+    } catch {
+      this.currentPhoto = undefined;
+    }
   }
 
   onFileSelected(event: Event): void {

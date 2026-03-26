@@ -32,11 +32,16 @@ export class PrivacySettingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const profile = this.profileService.getProfile(this.mockData.currentUser.userId);
-    this.form = this.fb.group({
-      contactDetails: [profile.privacy.contactDetails],
-      summary: [profile.privacy.summary],
-    });
+    let contactDetails: import('../../../core/models/user-profile.model').PrivacyVisibility = 'Everyone';
+    let summary: import('../../../core/models/user-profile.model').PrivacyVisibility = 'Everyone';
+    try {
+      const profile = this.profileService.getProfile(this.mockData.currentUser.userId);
+      contactDetails = profile.privacy.contactDetails;
+      summary = profile.privacy.summary;
+    } catch {
+      // No profile yet — initialise with defaults
+    }
+    this.form = this.fb.group({ contactDetails, summary });
   }
 
   save(): void {

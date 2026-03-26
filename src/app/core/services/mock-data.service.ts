@@ -269,7 +269,7 @@ export class MockDataService {
     {
       userId: 1,
       email: 'alex@example.com',
-      password: 'MockPass!1',
+      password: 'StrongPass!8',
       firstName: 'Alex',
       lastName: 'Morgan',
       phone: '+1 415 555 0100',

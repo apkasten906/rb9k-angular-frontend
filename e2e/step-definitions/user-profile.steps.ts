@@ -23,9 +23,7 @@ import { UserProfile, PrivacyVisibility } from '../../src/app/core/models/user-p
 // Background / shared Given steps
 // ---------------------------------------------------------------------------
 
-Given<AppWorld>('the user is signed in', function () {
-  // Mock always has userId: 1 — no action needed.
-});
+// NOTE: 'the user is signed in' is defined in shared.steps.ts — do not duplicate here.
 
 Given<AppWorld>('the user is on the registration page', async function (this: AppWorld) {
   await this.navigateTo('/profile');
@@ -85,8 +83,8 @@ Given<AppWorld>('an existing account uses email {string}', function (this: AppWo
 
 When<AppWorld>('the user enters email {string}', async function (this: AppWorld, email: string) {
   await this.page.fill('[data-testid=email-input]', email);
-  // dispatchEvent('blur') triggers both (blur)="onEmailBlur()" and Angular's markAsTouched
-  await this.page.locator('[data-testid=email-input]').dispatchEvent('blur');
+  // blur() reliably fires native blur event, marking the control touched and triggering onEmailBlur()
+  await this.page.locator('[data-testid=email-input]').blur();
   await this.page.waitForTimeout(300);
 });
 
@@ -224,8 +222,8 @@ Then<AppWorld>('the password is updated successfully', async function (this: App
 
 When<AppWorld>('the user enters a new password {string}', async function (this: AppWorld, newPw: string) {
   await this.page.fill('[data-testid=new-password-input]', newPw);
-  // Press Tab to blur the field → Angular marks it as touched → minlength error shows
-  await this.page.locator('[data-testid=new-password-input]').press('Tab');
+  // blur() moves focus away, marking the control as touched so minlength error renders
+  await this.page.locator('[data-testid=new-password-input]').blur();
   await this.page.waitForTimeout(300);
 });
 
@@ -239,8 +237,8 @@ When<AppWorld>(
   async function (this: AppWorld, newPw: string, confirm: string) {
     await this.page.fill('[data-testid=new-password-input]', newPw);
     await this.page.fill('[data-testid=confirm-password-input]', confirm);
-    // Blur confirm to make it dirty (triggers group mismatch validator display)
-    await this.page.locator('[data-testid=confirm-password-input]').dispatchEvent('blur');
+    // blur() makes the control touched so Angular Material enters error state
+    await this.page.locator('[data-testid=confirm-password-input]').blur();
     await this.page.waitForTimeout(300);
   }
 );
@@ -296,7 +294,7 @@ When<AppWorld>('the user enters a URL without https', async function (this: AppW
   await this.page.waitForTimeout(300);
 });
 
-Then<AppWorld>('the user sees "Enter a valid URL (https)"', async function (this: AppWorld) {
+Then<AppWorld>(/^the user sees "Enter a valid URL \(https\)"$/, async function (this: AppWorld) {
   await expect(this.page.locator('[data-testid=url-error]'))
     .toContainText('Enter a valid URL (https)', { timeout: 3000 });
 });
@@ -466,12 +464,13 @@ Given<AppWorld>(
   function (this: AppWorld, email: string, contactDetails: string, summary: string) {
     let profile = this.mock.profiles.find((p) => p.email === email);
     if (!profile) {
+      const maxId = Math.max(...this.mock.profiles.map((p) => p.userId));
       profile = {
-        userId: this.mock.currentUser.userId,
+        userId: maxId + 1,
         email,
         password: 'MockPass!1',
-        firstName: 'Alex',
-        lastName: 'Morgan',
+        firstName: 'Jane',
+        lastName: 'Doe',
         privacy: { contactDetails: 'Everyone', summary: 'Everyone' },
       };
       this.mock.profiles.push(profile);
@@ -486,7 +485,7 @@ Given<AppWorld>(
 );
 
 Given<AppWorld>(
-  "a second signed-in user is viewing {string}'s profile",
+  "a second signed-in user is viewing the {string} profile",
   function (this: AppWorld, _ownerEmail: string) {
     this.context['secondUserId'] = 999;
   }
@@ -565,9 +564,9 @@ Given<AppWorld>('the user is creating a profile', async function (this: AppWorld
 });
 
 When<AppWorld>('the user submits the form with email left empty', async function (this: AppWorld) {
-  // Clear the email field and Tab away → Angular marks it touched → "Email is required" shows
+  // Clear the email field and blur it → Angular marks it touched → "Email is required" shows
   await this.page.fill('[data-testid=email-input]', '');
-  await this.page.locator('[data-testid=email-input]').press('Tab');
+  await this.page.locator('[data-testid=email-input]').blur();
   await this.page.waitForTimeout(300);
 });
 

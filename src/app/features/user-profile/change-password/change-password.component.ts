@@ -51,6 +51,23 @@ export class ChangePasswordComponent {
       },
       { validators: passwordsMatchValidator }
     );
+
+    // Mirror the group-level mismatch error onto the confirmPassword control so
+    // Angular Material's mat-form-field enters error state and shows mat-error.
+    const syncMismatch = (): void => {
+      const confirmControl = this.form.get('confirmPassword');
+      if (this.form.hasError('passwordsMismatch')) {
+        confirmControl?.setErrors({ ...confirmControl.errors, passwordsMismatch: true });
+      } else {
+        const current = confirmControl?.errors;
+        if (current?.['passwordsMismatch']) {
+          const { passwordsMismatch: _m, ...rest } = current;
+          confirmControl?.setErrors(Object.keys(rest).length ? rest : null);
+        }
+      }
+    };
+    this.form.get('newPassword')?.valueChanges.subscribe(syncMismatch);
+    this.form.get('confirmPassword')?.valueChanges.subscribe(syncMismatch);
   }
 
   get passwordsMismatch(): boolean {

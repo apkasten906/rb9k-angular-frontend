@@ -81,17 +81,17 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>LinkedIn URL</mat-label>
       <input matInput formControlName="linkedInUrl" data-testid="linkedin-input" placeholder="https://www.linkedin.com/in/..." />
-      @if (form.get('linkedInUrl')?.hasError('httpsRequired') && form.get('linkedInUrl')?.touched) {
-        <mat-error data-testid="url-error">Enter a valid URL (https)</mat-error>
-      }
     </mat-form-field>
+    @if (form.get('linkedInUrl')?.hasError('httpsRequired')) {
+      <p class="field-error" data-testid="url-error">Enter a valid URL (https)</p>
+    }
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Portfolio URL</mat-label>
       <input matInput formControlName="portfolioUrl" data-testid="portfolio-input" placeholder="https://..." />
-      @if (form.get('portfolioUrl')?.hasError('httpsRequired') && form.get('portfolioUrl')?.touched) {
-        <mat-error data-testid="url-error">Enter a valid URL (https)</mat-error>
-      }
     </mat-form-field>
+    @if (form.get('portfolioUrl')?.hasError('httpsRequired')) {
+      <p class="field-error" data-testid="url-error">Enter a valid URL (https)</p>
+    }
   </section>
 
   <section class="form-section">

@@ -108,7 +108,7 @@ Given<AppWorld>('the user has a basic profile', function (this: AppWorld) {
     profile = {
       userId: this.mock.currentUser.userId,
       email: 'alex@example.com',
-      password: 'MockPass!1',
+      password: 'StrongPass!8',
       firstName: 'Alex',
       lastName: 'Morgan',
       linkedInUrl: 'https://linkedin.com/in/alex-morgan',
@@ -151,7 +151,7 @@ Given<AppWorld>('the user has a profile', function (this: AppWorld) {
     this.mock.profiles.push({
       userId: this.mock.currentUser.userId,
       email: 'alex@example.com',
-      password: 'MockPass!1',
+      password: 'StrongPass!8',
       firstName: 'Alex',
       lastName: 'Morgan',
       privacy: { contactDetails: 'Everyone', summary: 'Everyone' },
@@ -468,7 +468,7 @@ Given<AppWorld>(
       profile = {
         userId: maxId + 1,
         email,
-        password: 'MockPass!1',
+        password: 'StrongPass!8',
         firstName: 'Jane',
         lastName: 'Doe',
         privacy: { contactDetails: 'Everyone', summary: 'Everyone' },

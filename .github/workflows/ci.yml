@@ -78,7 +78,7 @@ jobs:
   bdd-tests:
     name: BDD Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Check out repository
@@ -98,6 +98,12 @@ jobs:
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
+
+      - name: Start Angular dev server
+        run: npx ng serve --port 4200 &
+
+      - name: Wait for dev server
+        run: npx wait-on http://localhost:4200 --timeout 60000
 
       - name: Run Cucumber scenarios
         run: npm run cucumber

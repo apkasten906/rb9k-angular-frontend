@@ -13,7 +13,14 @@ export class UserProfileService {
   }
 
   createProfile(data: Omit<UserProfile, 'userId'>): UserProfile {
-    const profile: UserProfile = { ...data, userId: this.mock.currentUser.userId };
+    const userId = this.mock.currentUser.userId;
+    if (this.mock.profiles.some((p) => p.userId === userId)) {
+      throw new Error(`Profile for userId ${userId} already exists`);
+    }
+    if (data.email && this.mock.profiles.some((p) => p.email === data.email)) {
+      throw new Error('Email already in use');
+    }
+    const profile: UserProfile = { ...data, userId };
     this.mock.profiles.push(profile);
     return profile;
   }

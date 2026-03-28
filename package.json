@@ -9,7 +9,8 @@
     "test": "jest --config jest.config.ts",
     "test:coverage": "jest --config jest.config.ts --coverage",
     "cucumber": "cucumber-js",
-    "cucumber:e2e": "cucumber-js --tags 'not @future-feature'"
+    "cucumber:e2e": "cucumber-js --tags 'not @future-feature'",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "private": true,
   "packageManager": "npm@11.9.0",

@@ -508,7 +508,8 @@ Then<AppWorld>('the second user can see the summary', function (this: AppWorld) 
 
 Given<AppWorld>('the user opens photo settings', async function (this: AppWorld) {
   await this.page.getByRole('tab', { name: 'Photo' }).click();
-  await this.page.locator('[data-testid=photo-input]').waitFor();
+  // photo-input is display:none — wait for the visible heading instead
+  await this.page.getByRole('heading', { name: 'Profile Photo' }).waitFor({ state: 'visible' });
 });
 
 When<AppWorld>('the user uploads {string} under 5MB', async function (this: AppWorld, filename: string) {

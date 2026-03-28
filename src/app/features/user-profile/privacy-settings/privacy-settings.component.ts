@@ -32,8 +32,8 @@ export class PrivacySettingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let contactDetails: import('../../../core/models/user-profile.model').PrivacyVisibility = 'Everyone';
-    let summary: import('../../../core/models/user-profile.model').PrivacyVisibility = 'Everyone';
+    let contactDetails: PrivacyVisibility = 'Everyone';
+    let summary: PrivacyVisibility = 'Everyone';
     try {
       const profile = this.profileService.getProfile(this.mockData.currentUser.userId);
       contactDetails = profile.privacy.contactDetails;

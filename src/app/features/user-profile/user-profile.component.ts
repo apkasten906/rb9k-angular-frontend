@@ -3,7 +3,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserProfileService } from '../../core/services/user-profile.service';
 import { MockDataService } from '../../core/services/mock-data.service';
-import { UserProfile } from '../../core/models/user-profile.model';
+import { UserProfile, TRACKED_PROFILE_FIELDS } from '../../core/models/user-profile.model';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PhotoSettingsComponent } from './photo-settings/photo-settings.component';
@@ -24,7 +24,7 @@ import { PrivacySettingsComponent } from './privacy-settings/privacy-settings.co
 })
 export class UserProfileComponent implements OnInit {
   profile: UserProfile | null = null;
-  completeness = { filled: 0, total: 12, percent: 0 };
+  completeness = { filled: 0, total: TRACKED_PROFILE_FIELDS.length, percent: 0 };
 
   constructor(
     private readonly profileService: UserProfileService,
@@ -41,7 +41,7 @@ export class UserProfileComponent implements OnInit {
       this.completeness = this.profileService.getCompleteness(this.mockData.currentUser.userId);
     } catch {
       this.profile = null;
-      this.completeness = { filled: 0, total: 12, percent: 0 };
+      this.completeness = { filled: 0, total: TRACKED_PROFILE_FIELDS.length, percent: 0 };
     }
   }
 

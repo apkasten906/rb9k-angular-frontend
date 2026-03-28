@@ -41,6 +41,8 @@ export class AppWorld extends World {
   /** Playwright page — opened per scenario by browser.hooks.ts. */
   page!: Page;
 
+  private initScriptSet = false;
+
   currentApplication: JobApplication | null = null;
   currentCareerEntry: CareerEntry | null = null;
   context: Record<string, unknown> = {};
@@ -65,10 +67,13 @@ export class AppWorld extends World {
    * MockDataService constructor when running in Angular).
    */
   async navigateTo(path: string): Promise<void> {
-    const profiles = this.mock.profiles;
-    await this.page.addInitScript((testData) => {
-      (globalThis as unknown as Record<string, unknown>)['__playwrightTestData'] = testData;
-    }, { profiles });
+    if (!this.initScriptSet) {
+      const profiles = this.mock.profiles;
+      await this.page.addInitScript((testData) => {
+        (globalThis as unknown as Record<string, unknown>)['__playwrightTestData'] = testData;
+      }, { profiles });
+      this.initScriptSet = true;
+    }
     await this.page.goto(path);
   }
 

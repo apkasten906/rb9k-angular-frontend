@@ -48,6 +48,7 @@ When<AppWorld>('the user submits basic information:', async function (this: AppW
   await this.page.fill('[data-testid=first-name-input]', row['first name'] ?? '');
   await this.page.fill('[data-testid=last-name-input]', row['last name'] ?? '');
   await this.page.fill('[data-testid=email-input]', row['email'] ?? '');
+  if (row['password']) await this.page.fill('[data-testid=password-input]', row['password']);
   if (row['phone']) await this.page.fill('[data-testid=phone-input]', row['phone']);
   if (row['location']) await this.page.fill('[data-testid=location-input]', row['location']);
   await this.page.click('[data-testid=save-btn]');
@@ -85,7 +86,6 @@ When<AppWorld>('the user enters email {string}', async function (this: AppWorld,
   await this.page.fill('[data-testid=email-input]', email);
   // blur() reliably fires native blur event, marking the control touched and triggering onEmailBlur()
   await this.page.locator('[data-testid=email-input]').blur();
-  await this.page.waitForTimeout(300);
 });
 
 Then<AppWorld>('the user sees "Email is already in use" and cannot proceed', async function (this: AppWorld) {
@@ -203,7 +203,7 @@ Given<AppWorld>('the user has profile information', function (this: AppWorld) {
 
 Given<AppWorld>('the user opens change password', async function (this: AppWorld) {
   await this.page.getByRole('tab', { name: 'Password' }).click();
-  await this.page.waitForTimeout(200);
+  await this.page.locator('[data-testid=current-password-input]').waitFor();
 });
 
 When<AppWorld>(
@@ -224,7 +224,6 @@ When<AppWorld>('the user enters a new password {string}', async function (this: 
   await this.page.fill('[data-testid=new-password-input]', newPw);
   // blur() moves focus away, marking the control as touched so minlength error renders
   await this.page.locator('[data-testid=new-password-input]').blur();
-  await this.page.waitForTimeout(300);
 });
 
 Then<AppWorld>('the user sees "Password must be at least 8 characters"', async function (this: AppWorld) {
@@ -239,7 +238,6 @@ When<AppWorld>(
     await this.page.fill('[data-testid=confirm-password-input]', confirm);
     // blur() makes the control touched so Angular Material enters error state
     await this.page.locator('[data-testid=confirm-password-input]').blur();
-    await this.page.waitForTimeout(300);
   }
 );
 
@@ -291,7 +289,6 @@ Then<AppWorld>('both links are saved and clickable', async function (this: AppWo
 When<AppWorld>('the user enters a URL without https', async function (this: AppWorld) {
   await this.page.fill('[data-testid=linkedin-input]', 'http://linkedin.com/in/test');
   await this.page.locator('[data-testid=linkedin-input]').press('Tab');
-  await this.page.waitForTimeout(300);
 });
 
 Then<AppWorld>(/^the user sees "Enter a valid URL \(https\)"$/, async function (this: AppWorld) {
@@ -433,7 +430,7 @@ Then<AppWorld>('the indicator shows {int}%', async function (this: AppWorld, exp
 
 Given<AppWorld>('the user opens privacy settings', async function (this: AppWorld) {
   await this.page.getByRole('tab', { name: 'Privacy' }).click();
-  await this.page.waitForTimeout(200);
+  await this.page.locator('mat-select[data-testid="contact-details-select"]').waitFor();
 });
 
 When<AppWorld>(
@@ -511,7 +508,7 @@ Then<AppWorld>('the second user can see the summary', function (this: AppWorld) 
 
 Given<AppWorld>('the user opens photo settings', async function (this: AppWorld) {
   await this.page.getByRole('tab', { name: 'Photo' }).click();
-  await this.page.waitForTimeout(200);
+  await this.page.locator('[data-testid=photo-input]').waitFor();
 });
 
 When<AppWorld>('the user uploads {string} under 5MB', async function (this: AppWorld, filename: string) {
@@ -521,7 +518,7 @@ When<AppWorld>('the user uploads {string} under 5MB', async function (this: AppW
     mimeType,
     buffer: Buffer.from([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10]),
   });
-  await this.page.waitForTimeout(300);
+  await this.page.locator('[data-testid=profile-photo]').waitFor();
 });
 
 Then<AppWorld>('{string} is displayed as the profile picture', async function (this: AppWorld, _filename: string) {
@@ -540,12 +537,12 @@ When<AppWorld>('the user replaces the photo with {string}', async function (this
     mimeType,
     buffer: Buffer.from([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10]),
   });
-  await this.page.waitForTimeout(300);
+  await this.page.locator('[data-testid=profile-photo]').waitFor();
 });
 
 When<AppWorld>('the user removes their profile photo', async function (this: AppWorld) {
   await this.page.click('[data-testid=remove-photo-btn]');
-  await this.page.waitForTimeout(300);
+  await this.page.locator('[data-testid=default-avatar]').waitFor();
 });
 
 Then<AppWorld>('the default avatar is displayed as the profile picture', async function (this: AppWorld) {
@@ -578,11 +575,10 @@ Then<AppWorld>('the user sees "Email is required" and cannot continue', async fu
 When<AppWorld>('the user submits the form with password left empty', async function (this: AppWorld) {
   // Password validation lives in the Change Password tab
   await this.page.getByRole('tab', { name: 'Password' }).click();
-  await this.page.waitForTimeout(200);
+  await this.page.locator('[data-testid=new-password-input]').waitFor();
   // Click the new-password field and Tab away without filling → marked touched → error shows
   await this.page.locator('[data-testid=new-password-input]').click();
   await this.page.locator('[data-testid=new-password-input]').press('Tab');
-  await this.page.waitForTimeout(300);
 });
 
 Then<AppWorld>('the user sees "Password is required" and cannot continue', async function (this: AppWorld) {

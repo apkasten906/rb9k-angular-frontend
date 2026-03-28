@@ -32,6 +32,16 @@
         <mat-error data-testid="email-error">Email is already in use</mat-error>
       }
     </mat-form-field>
+
+    @if (isNewProfile) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" data-testid="password-input" />
+        @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+          <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+    }
   </section>
 
   <section class="form-section" data-testid="contact-section">

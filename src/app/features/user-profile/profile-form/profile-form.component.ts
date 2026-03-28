@@ -40,7 +40,7 @@ export class ProfileFormComponent implements OnInit {
 
   form!: FormGroup;
   emailDuplicateError = false;
-  private isNewProfile = false;
+  protected isNewProfile = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -65,6 +65,7 @@ export class ProfileFormComponent implements OnInit {
       firstName: [profile?.firstName ?? '', Validators.required],
       lastName: [profile?.lastName ?? '', Validators.required],
       email: [profile?.email ?? '', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
+      password: ['', this.isNewProfile ? Validators.required : []],
       phone: [profile?.phone ?? ''],
       location: [profile?.location ?? ''],
       address: [profile?.address ?? ''],
@@ -98,7 +99,7 @@ export class ProfileFormComponent implements OnInit {
     }
     // Make the control invalid so Angular Material renders the mat-error
     if (this.emailDuplicateError) {
-      emailControl?.setErrors({ ...emailControl.errors, duplicate: true });
+      emailControl?.setErrors(Object.assign({}, emailControl.errors, { duplicate: true }));
     } else {
       const errors = emailControl?.errors;
       if (errors?.['duplicate']) {
@@ -130,7 +131,7 @@ export class ProfileFormComponent implements OnInit {
       if (this.isNewProfile) {
         this.profileService.createProfile({
           ...changes,
-          password: 'changeme',
+          password: val.password,
           privacy: { contactDetails: 'Everyone', summary: 'Everyone' },
         });
         this.isNewProfile = false;

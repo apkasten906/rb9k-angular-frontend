@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserProfileService } from '../../../core/services/user-profile.service';
 import { MockDataService } from '../../../core/services/mock-data.service';
 
@@ -57,7 +58,7 @@ export class ChangePasswordComponent {
     const syncMismatch = (): void => {
       const confirmControl = this.form.get('confirmPassword');
       if (this.form.hasError('passwordsMismatch')) {
-        confirmControl?.setErrors({ ...confirmControl.errors, passwordsMismatch: true });
+        confirmControl?.setErrors(Object.assign({}, confirmControl.errors, { passwordsMismatch: true }));
       } else {
         const current = confirmControl?.errors;
         if (current?.['passwordsMismatch']) {
@@ -66,8 +67,8 @@ export class ChangePasswordComponent {
         }
       }
     };
-    this.form.get('newPassword')?.valueChanges.subscribe(syncMismatch);
-    this.form.get('confirmPassword')?.valueChanges.subscribe(syncMismatch);
+    this.form.get('newPassword')?.valueChanges.pipe(takeUntilDestroyed()).subscribe(syncMismatch);
+    this.form.get('confirmPassword')?.valueChanges.pipe(takeUntilDestroyed()).subscribe(syncMismatch);
   }
 
   get passwordsMismatch(): boolean {

@@ -1,0 +1,122 @@
+<form [formGroup]="form" (ngSubmit)="save()" class="profile-form">
+
+  <section class="form-section">
+    <h2>Basic Information</h2>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" data-testid="first-name-input" />
+        @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
+          <mat-error>First name is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" data-testid="last-name-input" />
+        @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
+          <mat-error>Last name is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" data-testid="email-input" (blur)="onEmailBlur()" />
+      @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+        <mat-error data-testid="email-error">Email is required</mat-error>
+      }
+      @if (form.get('email')?.hasError('pattern') && form.get('email')?.touched) {
+        <mat-error data-testid="email-error">Enter a valid email address</mat-error>
+      }
+      @if (emailDuplicateError) {
+        <mat-error data-testid="email-error">Email is already in use</mat-error>
+      }
+    </mat-form-field>
+
+    @if (isNewProfile) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" data-testid="password-input" />
+        @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+          <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+    }
+  </section>
+
+  <section class="form-section" data-testid="contact-section">
+    <h2>Contact Details</h2>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" data-testid="phone-input" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" data-testid="location-input" />
+      </mat-form-field>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <h2>Address</h2>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Street Address</mat-label>
+      <input matInput formControlName="address" data-testid="address-input" />
+    </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city" data-testid="city-input" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>State / Province</mat-label>
+        <input matInput formControlName="state" data-testid="state-input" />
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country" data-testid="country-input" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Postal Code</mat-label>
+        <input matInput formControlName="postalCode" data-testid="postal-code-input" />
+      </mat-form-field>
+    </div>
+  </section>
+
+  <section class="form-section" data-testid="links-section">
+    <h2>Social Links</h2>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>LinkedIn URL</mat-label>
+      <input matInput formControlName="linkedInUrl" data-testid="linkedin-input" placeholder="https://www.linkedin.com/in/..." />
+    </mat-form-field>
+    @if (form.get('linkedInUrl')?.hasError('httpsRequired')) {
+      <p class="field-error" data-testid="url-error">Enter a valid URL (https)</p>
+    }
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Portfolio URL</mat-label>
+      <input matInput formControlName="portfolioUrl" data-testid="portfolio-input" placeholder="https://..." />
+    </mat-form-field>
+    @if (form.get('portfolioUrl')?.hasError('httpsRequired')) {
+      <p class="field-error" data-testid="url-error">Enter a valid URL (https)</p>
+    }
+  </section>
+
+  <section class="form-section">
+    <h2>Professional Summary</h2>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Summary</mat-label>
+      <textarea matInput formControlName="professionalSummary" data-testid="summary-textarea" rows="4"></textarea>
+    </mat-form-field>
+  </section>
+
+  <div class="form-actions">
+    <button mat-raised-button color="primary" type="submit" data-testid="save-btn"
+            [disabled]="form.invalid || emailDuplicateError">
+      Save Profile
+    </button>
+  </div>
+
+</form>

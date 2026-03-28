@@ -16,6 +16,11 @@
        [attr.aria-current]="rch.isActive ? 'page' : null">
       <mat-icon>history</mat-icon> Career History
     </a>
+    <a mat-button routerLink="/profile" routerLinkActive="active-link" #rpr="routerLinkActive"
+       [routerLinkActiveOptions]="{exact: false}" aria-label="Profile"
+       [attr.aria-current]="rpr.isActive ? 'page' : null">
+      <mat-icon>person</mat-icon> Profile
+    </a>
   </nav>
 </mat-toolbar>
 

@@ -1,0 +1,37 @@
+#!/bin/sh
+# Pre-commit hook: run BDD checks if the Angular dev server is already up.
+#
+# Setup (runs automatically via `npm install` due to the `prepare` script):
+#   git config core.hooksPath .githooks
+#
+# To skip for an emergency commit:  git commit --no-verify
+
+# Check if dev server is running on localhost:4200 using a cross-platform Node.js probe
+IS_SERVER_UP=$(node -e "
+const http = require('http');
+const req = http.request({ hostname: 'localhost', port: 4200, method: 'HEAD', path: '/' }, () => {
+  process.stdout.write('yes');
+  process.exit(0);
+});
+req.on('error', () => { process.stdout.write('no'); process.exit(0); });
+req.setTimeout(1000, () => { process.stdout.write('no'); req.destroy(); });
+req.end();
+" 2>/dev/null)
+
+if [ "$IS_SERVER_UP" = "yes" ]; then
+  echo "==> Dev server detected — running BDD checks before commit..."
+  npm run cucumber
+  EXIT_CODE=$?
+  if [ $EXIT_CODE -ne 0 ]; then
+    echo ""
+    echo "ERROR: BDD tests failed. Fix the failing scenarios before committing."
+    echo "       Use 'git commit --no-verify' to bypass (use sparingly)."
+    exit 1
+  fi
+  echo "==> BDD checks passed."
+else
+  echo "WARNING: Dev server not running on localhost:4200 — BDD checks skipped."
+  echo "         Run 'npm start' then 'npm run cucumber:e2e' before pushing."
+fi
+
+exit 0

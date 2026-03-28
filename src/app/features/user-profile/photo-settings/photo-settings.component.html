@@ -1,0 +1,44 @@
+<div class="photo-settings">
+  <h2>Profile Photo</h2>
+
+  <div class="photo-preview">
+    @if (currentPhoto) {
+      <div class="photo-placeholder has-photo" data-testid="profile-photo"
+           aria-label="Profile photo: {{ currentPhoto }}">
+        <mat-icon>photo</mat-icon>
+        <span class="photo-name">{{ currentPhoto }}</span>
+      </div>
+    } @else {
+      <div class="photo-placeholder default-avatar" data-testid="default-avatar"
+           aria-label="Default avatar">
+        <mat-icon>account_circle</mat-icon>
+        <span>No photo uploaded</span>
+      </div>
+    }
+  </div>
+
+  @if (sizeError) {
+    <p class="size-error" role="alert">{{ sizeError }}</p>
+  }
+
+  <div class="photo-actions">
+    <button mat-raised-button color="primary" (click)="fileInput.click()">
+      <mat-icon>upload</mat-icon>
+      {{ currentPhoto ? 'Replace Photo' : 'Upload Photo' }}
+    </button>
+    <input
+      #fileInput
+      type="file"
+      accept=".jpg,.jpeg,.png"
+      (change)="onFileSelected($event)"
+      data-testid="photo-input"
+      class="file-input"
+      aria-label="Upload profile photo"
+    />
+    @if (currentPhoto) {
+      <button mat-stroked-button color="warn" data-testid="remove-photo-btn" (click)="removePhoto()">
+        <mat-icon>delete</mat-icon> Remove Photo
+      </button>
+    }
+  </div>
+</div>

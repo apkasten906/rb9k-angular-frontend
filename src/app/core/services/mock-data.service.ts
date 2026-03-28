@@ -13,6 +13,7 @@ import { TimelineEvent } from '../models/timeline-event.model';
 import { CareerEntry } from '../models/career-entry.model';
 import { CareerResponsibility } from '../models/career-responsibility.model';
 import { CareerAchievement } from '../models/career-achievement.model';
+import { UserProfile } from '../models/user-profile.model';
 
 const NOW = '2026-03-12T10:26:06.997Z';
 const NINETY_DAYS_AGO = '2025-12-11T10:26:06.997Z';
@@ -263,4 +264,31 @@ export class MockDataService {
   ];
 
   gapExplanations: Record<string, string> = {};
+
+  profiles: UserProfile[] = [
+    {
+      userId: 1,
+      email: 'alex@example.com',
+      password: 'StrongPass!8',
+      firstName: 'Alex',
+      lastName: 'Morgan',
+      phone: '+1 415 555 0100',
+      location: 'San Francisco, CA',
+      linkedInUrl: 'https://linkedin.com/in/alex-morgan',
+      privacy: { contactDetails: 'Everyone', summary: 'Everyone' },
+    },
+  ];
+
+  constructor() {
+    // Playwright E2E bridge: when running browser tests, addInitScript seeds
+    // globalThis.__playwrightTestData before Angular boots so tests control mock state.
+    if (typeof globalThis['window'] !== 'undefined') {
+      const g = globalThis as unknown as Record<string, unknown>;
+      const testData = g['__playwrightTestData'] as { profiles?: UserProfile[] } | undefined;
+      if (testData?.profiles) {
+        this.profiles = [...testData.profiles];
+      }
+      g['__mock'] = this;
+    }
+  }
 }

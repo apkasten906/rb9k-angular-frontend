@@ -3,6 +3,8 @@
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "cSpell.words": [
         "dashboarding",
+        "fintech",
+        "headshot",
         "libpeerconnection",
         "normalised",
         "testem"
